@@ -4,7 +4,7 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 const domRef = ref()
-const model = ref('llama3.1')
+const model = ref<'llama3.1'>('llama3.1')
 const { content, messages, isFetching, submit } = useOllama(model)
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
@@ -22,7 +22,7 @@ function scrollToBottom() {
 
 
 watchEffect(() => {
-  if (shift.value && enter.value)
+  if (shift?.value && enter?.value)
     content.value += '\n'
 })
 
@@ -43,7 +43,7 @@ function handleKeyDown (e: KeyboardEvent) {
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar v-model="model" />
+    <TitleBar v-model="model" :class="{ 'shadow-md': y > 0 }" />
 
     <div ref="domRef" class="w-full h-full relative z-0 overflow-y-auto pt-20 pb-[116px] flex flex-col gap-4 px-8 py-6">
       <div v-for="(item, index) in messages" :key="index" v-motion-slide-visible-once-bottom class="flex" :class="{ 'justify-end': item.role === 'user' }">
