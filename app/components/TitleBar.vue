@@ -1,18 +1,5 @@
 <script setup lang="ts">
 const model = defineModel()
-const props = defineProps<{ host: string }>()
-const emit = defineEmits(['new', 'update:host'])
-const host = useVModel(props, 'host', emit)
-const _host = ref('')
-
-const visible = ref(false)
-
-watch(visible, (value) => {
-  if (value)
-    _host.value = host.value
-  else
-    host.value = _host.value
-})
 </script>
 
 <template>
@@ -30,12 +17,5 @@ watch(visible, (value) => {
         </div>
       </div>
     </div>
-
-    <UModal v-model="visible">
-      <div class="p-4 flex flex-col gap-2">
-        <div>Settings</div>
-        <UInput v-model="_host" color="gray" variant="outline" placeholder="Host" />
-      </div>
-    </UModal>
   </div>
 </template>
