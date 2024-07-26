@@ -4,8 +4,7 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 const domRef = ref()
-const model = ref<'llama3.1'>('llama3.1')
-const { content, messages, isFetching, submit } = useOllama(model)
+const { model, content, messages, isFetching, submit } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
 

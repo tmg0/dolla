@@ -9,11 +9,19 @@ interface SubmitOptions {
   onResponse: (part: string) => void
 }
 
-export function useOllama(model: MaybeRef<'llama3.1'>) {
+export function useOllama() {
   const ollama = new Ollama({ host: 'http://127.0.0.1:11434' })
   const messages = ref<Message[]>([])
+  const model  = ref('')
   const content = ref('')
   const isFetching = ref(false)
+  const { state } = useAsyncState(ollama.list(), { models: [] })
+  const models = computed(() => state.value.models)
+
+  watchOnce(models, (values) => {
+    if (values.length)
+      model.value = values[0]?.name ?? ''
+  })
 
   async function submit(options: Partial<SubmitOptions> = {}) {
     if (isFetching.value)
@@ -33,6 +41,8 @@ export function useOllama(model: MaybeRef<'llama3.1'>) {
   }
 
   return {
+    model,
+    models,
     messages,
     content,
     isFetching,
