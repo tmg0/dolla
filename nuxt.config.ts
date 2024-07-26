@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ssr: false,
   // Change defaults throughout your Nuxt configuration to Nuxt v4 behavior
   future: { compatibilityVersion: 4 },
-  modules: ['@nuxt/ui', '@vueuse/nuxt'],
+  modules: ['@nuxt/ui', '@vueuse/nuxt', '@vueuse/motion/nuxt'],
   // Enables the development server to be discoverable by other devices for mobile development
   devServer: { host: '0.0.0.0' },
   vite: {

@@ -9,7 +9,7 @@ interface SubmitOptions {
   onResponse: (part: string) => void
 }
 
-export function useOllama(model: 'llama3.1') {
+export function useOllama(model: MaybeRef<'llama3.1'>) {
   const ollama = new Ollama({ host: 'http://127.0.0.1:11434' })
   const messages = ref<Message[]>([])
   const content = ref('')
@@ -23,7 +23,7 @@ export function useOllama(model: 'llama3.1') {
     isFetching.value = true
     messages.value.push({ role: 'user', content: unref(content) })
     content.value = ''
-    const response = await ollama.chat({ model, messages: messages.value, stream: true })
+    const response = await ollama.chat({ model: unref(model), messages: messages.value, stream: true })
     messages.value.push({ role: 'assistant', content: '' })
     for await (const part of response) {
       messages.value.at(-1)!.content += part.message.content

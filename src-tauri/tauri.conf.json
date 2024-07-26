@@ -1,9 +1,9 @@
 {
   "productName": "Dolla",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "io.dolla.desktop",
   "build": {
-    "frontendDist": "../dist",
+    "frontendDist": "../.output/public",
     "devUrl": "http://localhost:3000",
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build"
@@ -15,7 +15,9 @@
         "width": 800,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
       }
     ],
     "security": {
