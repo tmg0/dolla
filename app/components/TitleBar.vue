@@ -12,7 +12,7 @@ const model = defineModel()
         <span>{{ model }}</span>
       </div>
 
-      <div class="cursor-pointer flex gap-2 text-gray-300 items-center justify-center rounded-lg py-1.5 px-3 h-10 hover:bg-gray-100 hover:text-gray-500 duration-300" @click="emit('new')">
+      <div class="cursor-pointer flex gap-2 text-gray-500 items-center justify-center rounded-lg py-1.5 px-3 h-10 hover:bg-gray-100 duration-300" @click="emit('new')">
         <span>New Chat</span>
         <UIcon name="i-heroicons-plus" />
       </div>
