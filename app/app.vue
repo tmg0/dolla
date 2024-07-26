@@ -4,7 +4,7 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 const domRef = ref()
-const { model, content, messages, isFetching, submit } = useOllama()
+const { host, model, content, messages, isFetching, submit } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
 
@@ -45,7 +45,7 @@ function handleSubmit() {
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar v-model="model" :class="{ 'shadow-md': y > 0 }" @new="messages = []" />
+    <TitleBar v-model="model" v-model:host="host" :class="{ 'shadow-md': y > 0 }" @new="messages = []" />
 
     <DollaWelcome v-if="!messages.length" class="pt-20 pb-[116px]"/>
 
