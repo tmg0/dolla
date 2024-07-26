@@ -28,21 +28,26 @@ watchEffect(() => {
 function handleKeyDown (e: KeyboardEvent) {
   if (e.keyCode === 13) {
     e.preventDefault()
-
-    submit({
-      onResponse() {
-        scrollToBottom()
-      },
-    })
-
-    scrollToBottom()
+    handleSubmit()
   }
+}
+
+function handleSubmit() {
+  submit({
+    onResponse() {
+      scrollToBottom()
+    },
+  })
+
+  scrollToBottom()
 }
 </script>
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar v-model="model" :class="{ 'shadow-md': y > 0 }" />
+    <TitleBar v-model="model" :class="{ 'shadow-md': y > 0 }" @new="messages = []" />
+
+    <DollaWelcome v-if="!messages.length" class="pt-20 pb-[116px]"/>
 
     <div ref="domRef" class="w-full h-full relative z-0 overflow-y-auto pt-20 pb-[116px] flex flex-col gap-4 px-8 py-6">
       <div v-for="(item, index) in messages" :key="index" v-motion-slide-visible-once-bottom class="flex" :class="{ 'justify-end': item.role === 'user' }">
@@ -53,7 +58,10 @@ function handleKeyDown (e: KeyboardEvent) {
     </div>
 
     <div class="flex items-center px-8 py-6 gap-2 backdrop-blur bg-white/75 w-screen absolute bottom-0 z-10">
-      <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" autoresize :rows="1" :maxrows="3" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1 rounded-xl bg-gray-100" @keydown="handleKeyDown" />
+      <div  class="flex items-center w-full rounded-xl bg-gray-100">
+        <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" autoresize :rows="1" :maxrows="3" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="handleKeyDown" />
+        <UButton icon="i-heroicons-paper-airplane" size="xs" :loading="isFetching" color="gray" class="flex-shrink-0 mx-3" @click="handleSubmit" />
+      </div>
     </div>
   </div>
 </template>
