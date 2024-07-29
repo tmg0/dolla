@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const emit = defineEmits(['new'])
 const model = defineModel()
 </script>
 
@@ -6,7 +7,7 @@ const model = defineModel()
   <div>
     <div data-tauri-drag-region class="flex pt-6 absolute top-0 w-full duration-300 z-10 backdrop-blur bg-white/75">
       <div class="px-2 py-2 w-full flex items-center justify-between">
-        <div class="flex cursor-pointer items-center gap-1 rounded-lg py-1.5 px-3 text-lg uppercase font-semibold text-gray-600 hover:bg-gray-100 duration-300" @click="visible = true">
+        <div class="flex cursor-pointer items-center gap-3 rounded-lg py-1.5 px-3 text-lg uppercase font-semibold text-gray-600 hover:bg-gray-100 duration-300">
           <MetaIcon class="w-6" />
           <span>{{ model }}</span>
         </div>
