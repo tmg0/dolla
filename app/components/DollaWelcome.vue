@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const emit = defineEmits(['click'])
+
 const TIME_RANGE = [
   [500 - 500, 1200 - 500],
   [1200 - 500, 1800 - 500],
@@ -27,9 +29,9 @@ const banner = computed(() => {
         How can I help you today?
       </div>
 
-      <UButton label="Get Start" color="gray" variant="outline" size="xl">
+      <UButton label="Get Start" color="gray" variant="outline" size="xl" class="group/item" @click="emit('click')">
         <template #trailing>
-          <UIcon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />
+          <UIcon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5 transition-all duration-300 -translate-x-1 group-hover/item:translate-x-1" />
         </template>
       </UButton>
     </div>
