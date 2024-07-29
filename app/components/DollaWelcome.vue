@@ -19,11 +19,11 @@ const banner = computed(() => {
 <template>
   <div v-motion-fade-visible-once class="flex flex-col justify-center items-center w-full h-full select-none">
     <div class="text-5xl leading-tight">
-      <div class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-cyan-500">
+      <div class="bg-clip-text text-transparent cursor-default bg-gradient-to-r from-pink-500 to-cyan-500">
         {{ banner }}
       </div>
 
-      <div class="text-gray-300">
+      <div class="cursor-default text-gray-300">
         How can I help you today?
       </div>
 
