@@ -63,6 +63,8 @@ function handleSubmit() {
         <UButton icon="i-heroicons-paper-airplane" size="xs" :loading="isFetching" color="gray" class="flex-shrink-0 mx-3" @click="handleSubmit" />
       </div>
     </div>
+
+    <SideBar class="absolute top-1/2 -translate-y-1/2 right-0" />
   </div>
 </template>
 
