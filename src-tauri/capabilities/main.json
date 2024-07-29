@@ -22,7 +22,19 @@
     "tray:default",
     {
       "identifier": "fs:allow-exists",
-      "allow": [{ "path": "$APPDATA/*" }]
+      "allow": [{ "path": "$RESOURCE/**/*" }]
+    },
+    {
+      "identifier": "fs:allow-write-text-file",
+      "allow": [{ "path": "$RESOURCE/**/*" }]
+    },
+    {
+      "identifier": "fs:allow-create",
+      "allow": [{ "path": "$RESOURCE/**/*" }]
+    },
+    {
+      "identifier": "fs:allow-mkdir",
+      "allow": [{ "path": "$RESOURCE/**/*" }]
     }
   ]
 }

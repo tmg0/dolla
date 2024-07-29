@@ -17,7 +17,7 @@ const banner = computed(() => {
 </script>
 
 <template>
-  <div v-motion-fade-visible-once class="flex flex-col justify-center items-center w-full h-full">
+  <div v-motion-fade-visible-once class="flex flex-col justify-center items-center w-full h-full select-none">
     <div class="text-5xl leading-tight">
       <div class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-cyan-500">
         {{ banner }}

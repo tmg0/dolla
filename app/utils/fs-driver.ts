@@ -20,7 +20,7 @@ function createError(
   return err;
 }
 
-export const tauriFsDriver = defineDriver((rawOptions: Partial<TauriFSStorageOptions>) => {
+export const tauriFsDriver = defineDriver((rawOptions: Partial<TauriFSStorageOptions> = {}) => {
   const options = { base: '.', ...rawOptions }
 
   function r(key: string) {
@@ -35,29 +35,30 @@ export const tauriFsDriver = defineDriver((rawOptions: Partial<TauriFSStorageOpt
     options,
 
     hasItem(key: string) {
-      return exists(r(key), { baseDir: BaseDirectory.AppData })
+      return exists(r(key), { baseDir: BaseDirectory.Resource })
     },
 
     async getItem<T>(key: string) {
-      const content = await readTextFile(r(key), { baseDir: BaseDirectory.AppData })
+      const content = await readTextFile(r(key), { baseDir: BaseDirectory.Resource })
       return destr<T>(content)
     },
 
-    setItem(key: string, value: any) {
-      writeTextFile(r(key), JSON.stringify(value), { baseDir: BaseDirectory.AppData })
+    async setItem(key: string, value: any) {
+      await ensureFile(r(key))
+      writeTextFile(r(key), JSON.stringify(value), { baseDir: BaseDirectory.Resource })
     },
 
     removeItem(key: string) {
-      remove(r(key), { baseDir: BaseDirectory.AppData })
+      remove(r(key), { baseDir: BaseDirectory.Resource })
     },
 
     async getKeys() {
-      const entries = await readDir(options.base, { baseDir: BaseDirectory.AppData })
+      const entries = await readDir(options.base, { baseDir: BaseDirectory.Resource })
       return entries.map(({ name }) => name)
     },
 
     clear() {
-      remove(options.base, { baseDir: BaseDirectory.AppData })
+      remove(options.base, { baseDir: BaseDirectory.Resource })
     }
   }
 })
