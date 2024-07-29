@@ -45,7 +45,7 @@ function handleSubmit() {
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar v-model="model" :class="{ 'shadow-md': y > 0 }" @new="messages = []" />
+    <TitleBar v-model="model" :arrived-top="y <= 4" @new="messages = []" />
 
     <DollaWelcome v-if="!messages.length" class="pt-20 pb-[116px]"/>
 
