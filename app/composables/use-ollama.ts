@@ -9,9 +9,14 @@ interface SubmitOptions {
   onResponse: (part: string) => void
 }
 
+type OllamaContext = Ref<{
+  host: string
+  temperature: number
+}>
+
 export function useOllama() {
-  const options = ref({ host: 'http://localhost:11434' })
-  let _ollama = new Ollama(options.value)
+  const options: OllamaContext = ref({ host: 'http://localhost:11434', temperature: 0.8 })
+  let _ollama = new Ollama({ host: options.value.host })
 
   const messages = ref<Message[]>([])
   const model  = ref('')
@@ -55,4 +60,19 @@ export function useOllama() {
     isFetching,
     submit
   }
+}
+
+export function useProvideOllamaContext(context: OllamaContext) {
+  provide('_OLLAMA_CONTEXT', context)
+}
+
+const defaults = ref({
+  host: '',
+  temperature: 0.8,
+  template: '',
+  proxy: ''
+})
+
+export function useOllamaContext() {
+  return inject<OllamaContext>('_OLLAMA_CONTEXT', defaults)
 }

@@ -1,12 +1,5 @@
 <script setup lang="ts">
-const defaults = {
-  host: '',
-  temperature: 0.8,
-  template: '',
-  proxy: ''
-}
-
-const options = inject<Ref<Record<string, any>>>('ollama-options', ref(defaults))
+const ctx = useOllamaContext()
 
 const visible = ref(false)
 
@@ -25,7 +18,7 @@ const items = [
   },
   {
     slot: 'profile',
-    label: 'Prfile',
+    label: 'Profile',
   },
 ]
 </script>
@@ -38,7 +31,9 @@ const items = [
 
     <UModal v-model="visible">
       <div class="p-4 flex flex-col w-full">
-        <div class="text-lg text-gray-800">Settings</div>
+        <div class="text-lg text-gray-800">
+          Settings
+        </div>
 
         <UDivider class="mt-2 mb-4" />
 
@@ -49,21 +44,21 @@ const items = [
                 <div class="text-sm text-gray-500">
                   Host
                 </div>
-                <UInput v-model="options.host" variant="outline" size="xs" />
+                <UInput v-model="ctx.host" variant="outline" size="xs" />
               </div>
 
               <div class="flex flex-col w-full gap-1">
                 <div class="text-sm text-gray-500">
                   Temperature
                 </div>
-                <URange v-model="options.temperature" size="xs" :min="0" :max="1" :step="0.1" />
+                <URange v-model="ctx.temperature" size="xs" :min="0" :max="1" :step="0.1" />
               </div>
 
               <div class="flex flex-col w-full gap-1">
                 <div class="text-sm text-gray-500">
-                   Template
+                  Template
                 </div>
-                <UTextarea v-model="options.template" variant="outline" size="xs" :rows="2" :maxrows="2" />
+                <UTextarea v-model="ctx.template" variant="outline" size="xs" :rows="2" :maxrows="2" />
               </div>
             </div>
           </template>

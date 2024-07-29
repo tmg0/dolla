@@ -8,7 +8,7 @@ const { options, model, content, messages, isFetching, submit } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
 
-provide('ollama-options', options)
+useProvideOllamaContext(options)
 
 md.use(await Shiki({
   themes: {
