@@ -8,7 +8,8 @@ export async function ensureDir(dir: string) {
 }
 
 export async function ensureFile(file: string) {
-  await ensureDir(dirname(file))
+  if (file.includes('/'))
+    await ensureDir(dirname(file))
   const e = await exists(file, { baseDir: BaseDirectory.Resource })
   if (!e)
     create(file, { baseDir: BaseDirectory.Resource })
