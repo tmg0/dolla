@@ -10,8 +10,8 @@ interface SubmitOptions {
 }
 
 export function useOllama() {
-  const host = ref('http://127.0.0.1:11434')
-  let _ollama = new Ollama({ host: host.value })
+  const options = ref({ host: 'http://localhost:11434' })
+  let _ollama = new Ollama(options.value)
 
   const messages = ref<Message[]>([])
   const model  = ref('')
@@ -25,8 +25,8 @@ export function useOllama() {
       model.value = values[0]?.name ?? ''
   })
 
-  watch(host, () => {
-    _ollama = new Ollama({ host: host.value })
+  watch(() => options.value.host, (host) => {
+    _ollama = new Ollama({ host })
   })
 
   async function submit(options: Partial<SubmitOptions> = {}) {
@@ -47,7 +47,7 @@ export function useOllama() {
   }
 
   return {
-    host,
+    options,
     model,
     models,
     messages,

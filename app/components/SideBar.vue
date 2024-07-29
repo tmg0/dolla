@@ -24,10 +24,12 @@ function toggle() {
             <UDivider :ui="{ border: { base: 'flex border-gray-100' } }" class="my-2" />
 
             <div class="flex flex-col w-full gap-px text-gray-500">
-              <div class="group/item flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
-                <UIcon name="i-heroicons-cog-8-tooth" class="flex-shrink-0 h-4 w-4 transition-all duration-300 group-hover/item:rotate-45" />
-                <span>Settings</span>
-              </div>
+              <Settings>
+                <div class="group/item flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
+                  <UIcon name="i-heroicons-cog-8-tooth" class="flex-shrink-0 h-4 w-4 transition-all duration-300 group-hover/item:rotate-45" />
+                  <span>Settings</span>
+                </div>
+              </Settings>
             </div>
           </div>
         </div>

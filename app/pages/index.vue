@@ -4,9 +4,11 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 const domRef = ref()
-const { model, content, messages, isFetching, submit } = useOllama()
+const { options, model, content, messages, isFetching, submit } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
+
+provide('ollama-options', options)
 
 md.use(await Shiki({
   themes: {
