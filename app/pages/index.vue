@@ -4,7 +4,7 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 const domRef = ref()
-const { options, model, content, messages, isFetching, submit } = useOllama()
+const { options, model, content, messages, isFetching, chat, abort } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
 
@@ -30,12 +30,16 @@ watchEffect(() => {
 function handleKeyDown (e: KeyboardEvent) {
   if (e.keyCode === 13) {
     e.preventDefault()
-    handleSubmit()
+    handleChat()
   }
 }
 
-function handleSubmit() {
-  submit({
+function handleClick() {
+  isFetching.value ? abort() : handleChat()
+}
+
+function handleChat() {
+  chat({
     onResponse() {
       scrollToBottom()
     },
@@ -62,7 +66,7 @@ function handleSubmit() {
     <div class="flex items-center px-8 py-6 gap-2 backdrop-blur bg-white/75 w-screen absolute bottom-0 z-10">
       <div  class="flex items-center w-full rounded-xl bg-gray-100">
         <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" autoresize :rows="1" :maxrows="3" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="handleKeyDown" />
-        <UButton icon="i-heroicons-paper-airplane" size="xs" :loading="isFetching" color="gray" class="flex-shrink-0 mx-3" @click="handleSubmit" />
+        <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" size="xs" color="gray" class="flex-shrink-0 mx-3" @click="handleClick" />
       </div>
     </div>
 

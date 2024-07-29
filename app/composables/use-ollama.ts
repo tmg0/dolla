@@ -34,7 +34,7 @@ export function useOllama() {
     _ollama = new Ollama({ host })
   })
 
-  async function submit(options: Partial<SubmitOptions> = {}) {
+  async function chat(options: Partial<SubmitOptions> = {}) {
     if (isFetching.value)
       return
     if (!content.value)
@@ -51,6 +51,11 @@ export function useOllama() {
     isFetching.value = false
   }
 
+  function abort() {
+    _ollama.abort()
+    isFetching.value = false
+  }
+
   return {
     options,
     model,
@@ -58,7 +63,8 @@ export function useOllama() {
     messages,
     content,
     isFetching,
-    submit
+    chat,
+    abort,
   }
 }
 
