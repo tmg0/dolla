@@ -9,7 +9,7 @@ const content = ref('')
 const { options, model } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
-const { conversations, isFetching, create, chat, abort } = useConversations()
+const { conversations, isFetching, create, chat, abort, remove } = useConversations()
 const isNew = computed(() => selected.value < 0)
 const messages = computed(() => isNew.value ? [] : conversations.value[selected.value]?.messages ?? [])
 
@@ -58,6 +58,11 @@ async function handleSelect(index: number) {
   await nextTick()
   scrollToBottom()
 }
+
+async function handleRemove(index: number) {
+  await remove(index)
+  selected.value = -1
+}
 </script>
 
 <template>
@@ -81,7 +86,7 @@ async function handleSelect(index: number) {
       </div>
     </div>
 
-    <SideBar :conversations="conversations" class="absolute top-1/2 -translate-y-1/2 right-0" @select="handleSelect" />
+    <SideBar :conversations="conversations" :selected-index="selected" class="absolute top-1/2 -translate-y-1/2 right-0" @select="handleSelect" @remove="handleRemove" />
   </div>
 </template>
 

@@ -1,7 +1,12 @@
 <script setup lang="ts">
-defineProps<{ conversations: any[] }>()
+interface Props {
+  conversations: any[]
+  selectedIndex: number
+}
 
-const emit = defineEmits(['select'])
+const props = defineProps<Props>()
+
+const emit = defineEmits(['select', 'remove'])
 const visible = ref(false)
 const domRef = ref()
 const isHovered = useElementHover(domRef)
@@ -13,6 +18,15 @@ function toggle() {
 function select(index: number) {
   visible.value = false
   emit('select', index)
+}
+
+function remove(index: number) {
+  visible.value = false
+  emit('remove', index)
+}
+
+function isSelected(index: number) {
+  return props.selectedIndex === index
 }
 </script>
 
@@ -26,10 +40,11 @@ function select(index: number) {
     <USlideover v-model="visible" :ui="{ width: 'max-w-72', background: 'bg-transparent' }">
       <div class="p-4 w-full h-full">
         <div class="p-3 flex flex-col justify-between h-full w-full rounded-xl bg-white">
-          <div class="flex flex-col w-full gap-[2px] pt-2">
+          <div class="flex flex-col w-full gap-1 pt-2">
             <div class="text-gray-400 text-xs font-semibold mb-1 select-none">Previous 7 Days</div>
-            <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm select-none p-2 truncate rounded-md cursor-pointer transition-all duration-300 text-gray-600 hover:bg-gray-100 hover:text-gray-800" @click="select(index)">
-              {{ item.title }}
+            <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm flex items-center gap-2 justify-between select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800" :class="[isSelected(index) ? 'bg-gray-100 text-gray-800' : ' text-gray-600']" @click="select(index)">
+              <div class="truncate">{{ item.title }}</div>
+              <UIcon v-if="isSelected(index)" name="i-heroicons-trash" class="flex-shrink-0 h-4 w-4 flex" @click="remove(index)" />
             </div>
           </div>
 
@@ -38,7 +53,7 @@ function select(index: number) {
 
             <div class="flex flex-col w-full gap-px text-gray-600">
               <Settings>
-                <div class="group/item flex items-center gap-2 px-2 py-1 text-xs rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
+                <div class="group/item flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
                   <UIcon name="i-heroicons-cog-8-tooth" class="flex-shrink-0 h-4 w-4 transition-all duration-300 group-hover/item:rotate-45" />
                   <span>Settings</span>
                 </div>
