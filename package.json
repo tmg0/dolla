@@ -11,8 +11,7 @@
     "lint:fix": "eslint . --fix --ignore-pattern src-tauri/"
   },
   "dependencies": {
-    "@tauri-apps/plugin-fs": "2.0.0-beta.7",
-    "@tauri-apps/plugin-sql": "2.0.0-beta.7",
+    "@tauri-apps/plugin-store": "2.0.0-beta.7",
     "@vueuse/motion": "^2.2.3",
     "destr": "^2.0.3",
     "markdown-it": "^14.1.0",
