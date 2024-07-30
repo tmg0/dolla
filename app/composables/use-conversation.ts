@@ -23,7 +23,7 @@ export function useConversations() {
 
   async function create(content?: MaybeRef<string>, options: ChatOptions = {}) {
     const now = Date.now()
-    conversations.value.unshift({ title: 'New Chat', updateTime: now, createTime: now, messages: [] })
+    conversations.value.unshift({ title: '', updateTime: now, createTime: now, messages: [] })
     const item = conversations.value[0]!
     if (unref(content)) {
       await chat(content, item, options)
@@ -53,10 +53,10 @@ export function useConversations() {
   }
 
   async function summarize(item: Conversation) {
-    item.title = ''
     const [_m] = item.messages
     const messages: Message[] = [{ role: 'user', content: `---BEGIN Conversation---\n${_m.content}\n---END Conversation---\nSummarize the conversation in 5 words or fewer:` }]
     const response = await oChat(messages)
+    item.title = ''
     for await (const part of response)
       item.title += part.message.content
   }
