@@ -7,26 +7,69 @@ interface Conversation {
   messages: Message[]
 }
 
+interface ChatOptions {
+  onChange?: () => void
+}
+
 export function useConversations() {
   const store = new Store('store.bin.conversations')
   const conversations = ref<Conversation[]>([])
+  const isFetching = ref(false)
+  const { chat: oChat, oAbort } = useOllama()
 
   onMounted(async () => {
     conversations.value = await store.values()
   })
 
-  function create(content?: MaybeRef<string>) {
+  async function create(content?: MaybeRef<string>) {
     const now = Date.now()
-    const messages = []
-    if (unref(content))
-      messages.push({ role: 'user', content: unref(content) })
-    conversations.value.push({ title: 'New Chat', updateTime: now, createTime: now, messages })
-    store.set(String(now), conversations.value)
+    conversations.value.unshift({ title: 'New Chat', updateTime: now, createTime: now, messages: [] })
+    const item = conversations.value[0]!
+    if (unref(content)) {
+      await chat(content, item)
+      await nextTick()
+      await summarize(conversations.value[0]!)
+    }
+    store.set(String(now), item)
+  }
+
+  async function chat(content: MaybeRef<string | undefined>, item: Conversation, options: ChatOptions = {}) {
+    if (isFetching.value || !unref(content))
+      return
+    isFetching.value = true
+    item.messages.push({ role: 'user', content: unref(content) })
+    store.set(String(item.createTime), item)
+    if (isRef(content))
+      content.value = ''
+    options.onChange?.()
+    const response = await oChat(item.messages)
+    item.messages.push({ role: 'assistant', content: '' })
+    for await (const part of response) {
+      item.messages.at(-1)!.content += part.message.content
+      options.onChange?.()
+    }
+    isFetching.value = false
+    store.set(String(item.createTime), item)
+  }
+
+  async function summarize(item: Conversation) {
+    item.title = ''
+    const response = await oChat(item.messages)
+    for await (const part of response)
+      item.title += part.message.content
+  }
+
+  function abort() {
+    oAbort()
+    isFetching.value = false
   }
 
   return {
     store,
+    isFetching,
     conversations,
-    create
+    create,
+    chat,
+    abort
   }
 }

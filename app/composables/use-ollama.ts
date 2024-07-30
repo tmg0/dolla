@@ -5,10 +5,6 @@ interface Message {
   content: string
 }
 
-interface SubmitOptions {
-  onResponse: (part: string) => void
-}
-
 type OllamaContext = Ref<{
   host: string
   temperature: number
@@ -18,10 +14,8 @@ export function useOllama() {
   const options: OllamaContext = ref({ host: 'http://localhost:11434', temperature: 0.8 })
   let _ollama = new Ollama({ host: options.value.host })
 
-  const messages = ref<Message[]>([])
   const model  = ref('')
   const content = ref('')
-  const isFetching = ref(false)
   const { state } = useAsyncState(_ollama.list(), { models: [] })
   const models = computed(() => state.value.models)
 
@@ -34,35 +28,19 @@ export function useOllama() {
     _ollama = new Ollama({ host })
   })
 
-  async function chat(options: Partial<SubmitOptions> = {}) {
-    if (isFetching.value)
-      return
-    if (!content.value)
-      return
-    isFetching.value = true
-    messages.value.push({ role: 'user', content: unref(content) })
-    content.value = ''
-    const response = await _ollama.chat({ model: unref(model), messages: messages.value, stream: true })
-    messages.value.push({ role: 'assistant', content: '' })
-    for await (const part of response) {
-      messages.value.at(-1)!.content += part.message.content
-      options.onResponse?.(part.message.content)
-    }
-    isFetching.value = false
+  function chat(messages: MaybeRef<Message[]>) {
+    return _ollama.chat({ model: unref(model), messages: unref(messages), stream: true })
   }
 
   function abort() {
     _ollama.abort()
-    isFetching.value = false
   }
 
   return {
     options,
     model,
     models,
-    messages,
     content,
-    isFetching,
     chat,
     abort,
   }

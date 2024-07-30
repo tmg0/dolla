@@ -1,10 +1,18 @@
 <script setup lang="ts">
+defineProps<{ conversations: any[] }>()
+
+const emit = defineEmits(['select'])
 const visible = ref(false)
 const domRef = ref()
 const isHovered = useElementHover(domRef)
 
 function toggle() {
   visible.value = !visible.value
+}
+
+function select(index: number) {
+  visible.value = false
+  emit('select', index)
 }
 </script>
 
@@ -18,14 +26,19 @@ function toggle() {
     <USlideover v-model="visible" :ui="{ width: 'max-w-72', background: 'bg-transparent' }">
       <div class="p-4 w-full h-full">
         <div class="p-3 flex flex-col justify-between h-full w-full rounded-xl bg-white">
-          <div />
+          <div class="flex flex-col w-full gap-[2px] pt-2">
+            <div class="text-gray-400 text-xs font-semibold mb-1 select-none">Previous 7 Days</div>
+            <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm select-none p-2 truncate rounded-md cursor-pointer transition-all duration-300 text-gray-600 hover:bg-gray-100 hover:text-gray-800" @click="select(index)">
+              {{ item.title }}
+            </div>
+          </div>
 
           <div>
             <UDivider :ui="{ border: { base: 'flex border-gray-100' } }" class="my-2" />
 
-            <div class="flex flex-col w-full gap-px text-gray-500">
+            <div class="flex flex-col w-full gap-px text-gray-600">
               <Settings>
-                <div class="group/item flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
+                <div class="group/item flex items-center gap-2 px-2 py-1 text-xs rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
                   <UIcon name="i-heroicons-cog-8-tooth" class="flex-shrink-0 h-4 w-4 transition-all duration-300 group-hover/item:rotate-45" />
                   <span>Settings</span>
                 </div>

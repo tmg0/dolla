@@ -4,9 +4,14 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 const domRef = ref()
-const { options, model, content, messages, isFetching, chat, abort } = useOllama()
+const selected = ref(-1)
+const content = ref('')
+const { options, model } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
+const { conversations, isFetching, create, chat, abort } = useConversations()
+const isNew = computed(() => selected.value < 0)
+const messages = computed(() => isNew.value ? [] : conversations.value[selected.value]?.messages ?? [])
 
 useProvideOllamaContext(options)
 
@@ -39,19 +44,25 @@ function handleClick() {
 }
 
 function handleChat() {
-  chat({
-    onResponse() {
-      scrollToBottom()
-    },
-  })
+  if (isNew.value) {
+    create(content)
+    selected.value = 0
+    return
+  }
+  
+  chat(content, conversations.value[selected.value]!, { onChange() { scrollToBottom() } })
+}
 
+async function handleSelect(index: number) {
+  selected.value = index
+  await nextTick()
   scrollToBottom()
 }
 </script>
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar v-model="model" :arrived-top="y <= 4" @new="messages = []" />
+    <TitleBar v-model="model" :arrived-top="y <= 4" @new="selected = -1" />
 
     <DollaWelcome v-if="!messages.length" class="pt-20 pb-[116px]"/>
 
@@ -70,7 +81,7 @@ function handleChat() {
       </div>
     </div>
 
-    <SideBar class="absolute top-1/2 -translate-y-1/2 right-0" />
+    <SideBar :conversations="conversations" class="absolute top-1/2 -translate-y-1/2 right-0" @select="handleSelect" />
   </div>
 </template>
 
