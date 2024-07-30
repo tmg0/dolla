@@ -40,8 +40,8 @@ function isSelected(index: number) {
     <USlideover v-model="visible" :ui="{ width: 'max-w-72', background: 'bg-transparent' }">
       <div class="p-4 w-full h-full">
         <div class="p-3 flex flex-col justify-between h-full w-full rounded-xl bg-white">
-          <div class="flex flex-col w-full gap-1 pt-2">
-            <div class="text-gray-400 text-xs font-semibold mb-1 select-none">Previous 7 Days</div>
+          <div class="flex flex-col w-full gap-1">
+            <div class="text-gray-400 text-xs font-semibold mb-1 select-none">Recents</div>
             <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm flex items-center gap-2 justify-between select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800" :class="[isSelected(index) ? 'bg-gray-100 text-gray-800' : ' text-gray-600']" @click="select(index)">
               <div class="truncate">{{ item.title }}</div>
               <UIcon v-if="isSelected(index)" name="i-heroicons-trash" class="flex-shrink-0 h-4 w-4 flex" @click="remove(index)" />

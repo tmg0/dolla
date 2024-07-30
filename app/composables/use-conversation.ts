@@ -21,12 +21,12 @@ export function useConversations() {
     conversations.value = await store.values()
   })
 
-  async function create(content?: MaybeRef<string>) {
+  async function create(content?: MaybeRef<string>, options: ChatOptions = {}) {
     const now = Date.now()
     conversations.value.unshift({ title: 'New Chat', updateTime: now, createTime: now, messages: [] })
     const item = conversations.value[0]!
     if (unref(content)) {
-      await chat(content, item)
+      await chat(content, item, options)
       await nextTick()
       await summarize(conversations.value[0]!)
     }

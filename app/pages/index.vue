@@ -45,7 +45,7 @@ function handleClick() {
 
 function handleChat() {
   if (isNew.value) {
-    create(content)
+    create(content, { onChange() { scrollToBottom() } })
     selected.value = 0
     return
   }
