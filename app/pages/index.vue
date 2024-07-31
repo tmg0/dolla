@@ -74,7 +74,7 @@ async function handleRemove(index: number) {
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar :arrived-top="y <= 4" @new="selected = -1" />
+    <TitleBar :arrived-top="y <= 8" @new="selected = -1" />
 
     <DollaWelcome v-if="!messages.length" class="pt-20 pb-[116px]" />
 
@@ -93,7 +93,7 @@ async function handleRemove(index: number) {
       </div>
     </div>
 
-    <SideBar :conversations="conversations" :selected-index="selected" class="absolute top-1/2 -translate-y-1/2 right-0" @select="handleSelect" @remove="handleRemove" />
+    <SideBar v-if="conversations.length" :conversations="conversations" :selected-index="selected" class="absolute top-1/2 -translate-y-1/2 right-0" @select="handleSelect" @remove="handleRemove" />
   </div>
 </template>
 
@@ -107,4 +107,3 @@ async function handleRemove(index: number) {
   overflow-x: auto;
 }
 </style>
-../stores/ollama

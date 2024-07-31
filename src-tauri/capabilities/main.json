@@ -20,6 +20,11 @@
     "image:default",
     "menu:default",
     "tray:default",
-    "store:default"
+    "store:default",
+    "fs:default",
+    {
+      "identifier": "fs:allow-create",
+      "allow": [{ "path": "$APPDATA/*" }]
+    }
   ]
 }

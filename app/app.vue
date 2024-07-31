@@ -1,3 +1,7 @@
+<script setup lang="ts">
+ensureSqlite()
+</script>
+
 <template>
   <NuxtPage />
 </template>

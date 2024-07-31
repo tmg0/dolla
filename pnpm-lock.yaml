@@ -11,6 +11,9 @@ importers:
       '@pinia/nuxt':
         specifier: ^0.5.2
         version: 0.5.2(magicast@0.3.4)(rollup@4.19.1)(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4))
+      '@tauri-apps/plugin-fs':
+        specifier: 2.0.0-beta.7
+        version: 2.0.0-beta.7
       '@tauri-apps/plugin-store':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
@@ -32,9 +35,6 @@ importers:
       pinia:
         specifier: ^2.2.0
         version: 2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4))
-      unstorage:
-        specifier: ^1.10.2
-        version: 1.10.2(ioredis@5.4.1)
       vue:
         specifier: latest
         version: 3.4.34(typescript@5.5.4)
@@ -1406,6 +1406,9 @@ packages:
     resolution: {integrity: sha512-OAuiDdSRKxNmr/dseQKKMoZZxIhQ6aAxmXJctGYJxCnkd62tQ8xeq87roVXGNS5Qkuv7WpySAyR0ntiMjvNLUA==}
     engines: {node: '>= 10'}
     hasBin: true
+
+  '@tauri-apps/plugin-fs@2.0.0-beta.7':
+    resolution: {integrity: sha512-hsZyhzvy+xtRfbrKI2rmU1ZfmgbSs7Zu/6a12MFlJKVzqXmUwJvggcjYdm1cEFdLbnOOsszENXbwMnkzmxtirA==}
 
   '@tauri-apps/plugin-store@2.0.0-beta.7':
     resolution: {integrity: sha512-OgeicsLfN7/u/vfxhzJfsZsNfVJWrhmwhEn2oK4OJ1kvkrGbkfK0/ZORSkmqbpByI6hXWYZrbeyXDuVIefVWAQ==}
@@ -6426,6 +6429,10 @@ snapshots:
       '@tauri-apps/cli-win32-arm64-msvc': 2.0.0-beta.22
       '@tauri-apps/cli-win32-ia32-msvc': 2.0.0-beta.22
       '@tauri-apps/cli-win32-x64-msvc': 2.0.0-beta.22
+
+  '@tauri-apps/plugin-fs@2.0.0-beta.7':
+    dependencies:
+      '@tauri-apps/api': 2.0.0-beta.15
 
   '@tauri-apps/plugin-store@2.0.0-beta.7':
     dependencies:
