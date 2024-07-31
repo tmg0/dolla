@@ -20,7 +20,10 @@
     "image:default",
     "menu:default",
     "tray:default",
-    "store:default",
+    "sql:allow-load",
+    "sql:allow-select",
+    "sql:allow-execute",
+    "sql:allow-close",
     "fs:default",
     {
       "identifier": "fs:allow-create",

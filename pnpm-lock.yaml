@@ -14,12 +14,18 @@ importers:
       '@tauri-apps/plugin-fs':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
+      '@tauri-apps/plugin-sql':
+        specifier: 2.0.0-beta.7
+        version: 2.0.0-beta.7
       '@tauri-apps/plugin-store':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
       '@vueuse/motion':
         specifier: ^2.2.3
         version: 2.2.3(magicast@0.3.4)(rollup@4.19.1)(vue@3.4.34(typescript@5.5.4))
+      '@vueuse/router':
+        specifier: ^10.11.0
+        version: 10.11.0(vue-router@4.4.0(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))
       destr:
         specifier: ^2.0.3
         version: 2.0.3
@@ -1410,6 +1416,9 @@ packages:
   '@tauri-apps/plugin-fs@2.0.0-beta.7':
     resolution: {integrity: sha512-hsZyhzvy+xtRfbrKI2rmU1ZfmgbSs7Zu/6a12MFlJKVzqXmUwJvggcjYdm1cEFdLbnOOsszENXbwMnkzmxtirA==}
 
+  '@tauri-apps/plugin-sql@2.0.0-beta.7':
+    resolution: {integrity: sha512-VPJntJtyY0Y3UEwgRrG3C/BUNgFuWNdw1w2DuOvdiQtz97VT6DuJO7IPY+T9iYG0JfVqpKmJSHiuLvI6jZ/IMw==}
+
   '@tauri-apps/plugin-store@2.0.0-beta.7':
     resolution: {integrity: sha512-OgeicsLfN7/u/vfxhzJfsZsNfVJWrhmwhEn2oK4OJ1kvkrGbkfK0/ZORSkmqbpByI6hXWYZrbeyXDuVIefVWAQ==}
 
@@ -1777,6 +1786,11 @@ packages:
     resolution: {integrity: sha512-PV15CU28qzr/+4IleyahobwU9kfTwfbsl8f+wkv6TWjboFVdt4WLMP2TNfPj7QgssyDdCRdl3gLZ4DC884wnDw==}
     peerDependencies:
       nuxt: ^3.0.0
+
+  '@vueuse/router@10.11.0':
+    resolution: {integrity: sha512-1U4DiJuRhe3JeUXxuoKM2wlBslqu5ug8yraluD9bgWDHCRDtY9XUDsjViZufMKjQrddqvv2H6DRSRf9MWO4VSA==}
+    peerDependencies:
+      vue-router: '>=4.0.0-rc.1'
 
   '@vueuse/shared@10.11.0':
     resolution: {integrity: sha512-fyNoIXEq3PfX1L3NkNhtVQUSRtqYwJtJg+Bp9rIzculIZWHTkKSysujrOk2J+NrRulLTQH9+3gGSfYLWSEWU1A==}
@@ -6434,6 +6448,10 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.0.0-beta.15
 
+  '@tauri-apps/plugin-sql@2.0.0-beta.7':
+    dependencies:
+      '@tauri-apps/api': 2.0.0-beta.15
+
   '@tauri-apps/plugin-store@2.0.0-beta.7':
     dependencies:
       '@tauri-apps/api': 2.0.0-beta.15
@@ -6940,6 +6958,15 @@ snapshots:
       - magicast
       - rollup
       - supports-color
+      - vue
+
+  '@vueuse/router@10.11.0(vue-router@4.4.0(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))':
+    dependencies:
+      '@vueuse/shared': 10.11.0(vue@3.4.34(typescript@5.5.4))
+      vue-demi: 0.14.10(vue@3.4.34(typescript@5.5.4))
+      vue-router: 4.4.0(vue@3.4.34(typescript@5.5.4))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
       - vue
 
   '@vueuse/shared@10.11.0(vue@3.4.34(typescript@5.5.4))':

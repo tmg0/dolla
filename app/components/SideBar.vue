@@ -1,32 +1,29 @@
 <script setup lang="ts">
-interface Props {
-  conversations: any[]
-  selectedIndex: number
-}
-
-const props = defineProps<Props>()
-
-const emit = defineEmits(['select', 'remove'])
 const visible = ref(false)
 const domRef = ref()
 const isHovered = useElementHover(domRef)
+const router = useRouter()
+const store = useConversationStore()
+const { conversations } = storeToRefs(store)
+const conversationId = useRouteParams('id', '', { transform: val => val ? Number(val) : undefined })
 
 function toggle() {
   visible.value = !visible.value
 }
 
-function select(index: number) {
-  visible.value = false
-  emit('select', index)
+function isSelected(id: number) {
+  return conversationId.value === id
 }
 
-function remove(index: number) {
+function select(id: number) {
   visible.value = false
-  emit('remove', index)
+  router.replace(`/${id}`)
 }
 
-function isSelected(index: number) {
-  return props.selectedIndex === index
+async function removeItem(id: number) {
+  await store.removeItem(id as number)
+  visible.value = false
+  router.replace('/')
 }
 </script>
 
@@ -44,12 +41,12 @@ function isSelected(index: number) {
             <div class="text-gray-400 text-xs font-semibold mb-1 select-none">
               Recents
             </div>
-            <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm flex items-center justify-between gap-2 select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-900" :class="[isSelected(index) ? 'bg-gray-100 text-gray-900' : ' text-gray-600']" @click="select(index)">
+            <div v-for="item in conversations" :key="item.id" class="text-sm flex items-center justify-between gap-2 select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-900" :class="[isSelected(item.id) ? 'bg-gray-100 text-gray-900' : ' text-gray-600']" @click="select(item.id)">
               <UIcon name="i-heroicons-chat-bubble-left-right" class="flex-shrink-0 h-4 w-4 flex" />
               <div class="truncate flex-1">
                 {{ item.title || 'New Chat' }}
               </div>
-              <ConversationActionGroup v-if="isSelected(index)" @delete="remove(index)" />
+              <ConversationActionGroup v-if="isSelected(item.id)" @delete="removeItem(item.id)" />
             </div>
           </div>
 

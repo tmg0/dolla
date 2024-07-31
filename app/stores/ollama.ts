@@ -1,4 +1,4 @@
-import { Ollama } from 'ollama/browser'
+import { type Message, Ollama } from 'ollama/browser'
 
 export const useOllamaStore = defineStore('ollama', () => {
   const model = ref('')

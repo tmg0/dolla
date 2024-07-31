@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{ arrivedTop: boolean }>()
 
-const emit = defineEmits(['new'])
+const router = useRouter()
 const store = useOllamaStore()
 const { model } = storeToRefs(store)
 </script>
@@ -15,7 +15,7 @@ const { model } = storeToRefs(store)
           <span>{{ model }}</span>
         </div>
 
-        <div class="cursor-pointer flex gap-2 text-gray-500 items-center justify-center rounded-lg py-1.5 px-3 h-10 select-none hover:bg-gray-100 duration-300" @click="emit('new')">
+        <div class="cursor-pointer flex gap-2 text-gray-500 items-center justify-center rounded-lg py-1.5 px-3 h-10 select-none hover:bg-gray-100 duration-300" @click="router.replace('/')">
           <span>New Chat</span>
           <UIcon name="i-heroicons-plus" />
         </div>

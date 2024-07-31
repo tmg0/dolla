@@ -1,9 +1,59 @@
 <script setup lang="ts">
-ensureSqlite()
+const content = ref('')
+const offsetTop = ref(0)
+const { shift, enter } = useMagicKeys()
+const conversationStore = useConversationStore()
+const { conversations } = storeToRefs(conversationStore)
+const router = useRouter()
+const messageStore = useMessageStore()
+const { isNew, isFetching } = storeToRefs(messageStore)
+
+watchEffect(() => {
+  if (shift?.value && enter?.value)
+    content.value += '\n'
+})
+
+function keydown(e: KeyboardEvent) {
+  if (e.keyCode === 13) {
+    e.preventDefault()
+    send()
+  }
+}
+
+function clickSuffix() {
+  (isFetching.value ? messageStore.abort : send)()
+}
+
+function send() {
+  if (isNew.value && content.value) {
+    conversationStore.create(content, {
+      afterCreate({ id }) {
+        router.replace(`/${id}`)
+      },
+    })
+
+    return
+  }
+
+  messageStore.chat(content)
+}
 </script>
 
 <template>
-  <NuxtPage />
+  <div class="h-screen overflow-hidden elative text-sm rounded-xl">
+    <TitleBar :arrived-top="isNew || offsetTop <= 16" />
+
+    <NuxtPage v-model:offset-top="offsetTop" />
+
+    <div class="flex items-center px-8 py-6 gap-2 backdrop-blur bg-white/75 w-screen absolute bottom-0 z-10">
+      <div class="flex items-center w-full rounded-xl bg-gray-100">
+        <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" autoresize :rows="1" :maxrows="3" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
+        <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" size="xs" color="gray" class="flex-shrink-0 mx-3" @click="clickSuffix" />
+      </div>
+    </div>
+
+    <SideBar v-if="conversations.length" class="absolute top-1/2 -translate-y-1/2 right-0" />
+  </div>
 </template>
 
 <style>
