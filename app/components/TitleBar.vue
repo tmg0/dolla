@@ -2,7 +2,8 @@
 defineProps<{ arrivedTop: boolean }>()
 
 const emit = defineEmits(['new'])
-const model = defineModel()
+const store = useOllamaStore()
+const { model } = storeToRefs(store)
 </script>
 
 <template>

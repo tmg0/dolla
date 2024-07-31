@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const ctx = useOllamaContext()
-
+const store = useOllamaStore()
+const { host, temperature, template } = storeToRefs(store)
 const visible = ref(false)
 </script>
 
@@ -23,21 +23,21 @@ const visible = ref(false)
             <div class="text-sm text-gray-500">
               Host
             </div>
-            <UInput v-model="ctx.host" variant="outline" size="xs" />
+            <UInput v-model="host" variant="outline" size="xs" />
           </div>
 
           <div class="flex flex-col w-full gap-1">
             <div class="text-sm text-gray-500">
               Temperature
             </div>
-            <URange v-model="ctx.temperature" size="xs" :min="0" :max="1" :step="0.1" />
+            <URange v-model="temperature" size="xs" :min="0" :max="1" :step="0.1" />
           </div>
 
           <div class="flex flex-col w-full gap-1">
             <div class="text-sm text-gray-500">
               Template
             </div>
-            <UTextarea v-model="ctx.template" variant="outline" size="xs" :rows="2" :maxrows="2" />
+            <UTextarea v-model="template" variant="outline" size="xs" :rows="2" :maxrows="2" />
           </div>
         </div>
       </div>

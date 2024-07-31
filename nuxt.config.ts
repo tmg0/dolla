@@ -36,10 +36,6 @@ export default defineNuxtConfig({
     },
   },
 
-  pinia: {
-    storesDirs: ['./app/stores/**'],
-  },
-
   tailwindcss: {
     cssPath: '~/src/assets/css/tailwind.css',
   },

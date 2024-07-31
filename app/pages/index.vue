@@ -6,14 +6,11 @@ const md = markdownit()
 const domRef = ref()
 const selected = ref(-1)
 const content = ref('')
-const { options, model } = useOllama()
 const { shift, enter } = useMagicKeys()
 const { y } = useScroll(domRef, { behavior: 'smooth' })
 const { conversations, isFetching, create, chat, abort, remove } = useConversations()
 const isNew = computed(() => selected.value < 0)
 const messages = computed(() => isNew.value ? [] : conversations.value[selected.value]?.messages ?? [])
-
-useProvideOllamaContext(options)
 
 md.use(await Shiki({
   themes: {
@@ -77,7 +74,7 @@ async function handleRemove(index: number) {
 
 <template>
   <div class="h-screen overflow-hidden elative text-sm rounded-xl">
-    <TitleBar v-model="model" :arrived-top="y <= 4" @new="selected = -1" />
+    <TitleBar :arrived-top="y <= 4" @new="selected = -1" />
 
     <DollaWelcome v-if="!messages.length" class="pt-20 pb-[116px]" />
 
@@ -110,3 +107,4 @@ async function handleRemove(index: number) {
   overflow-x: auto;
 }
 </style>
+../stores/ollama

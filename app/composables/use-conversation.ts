@@ -15,7 +15,7 @@ export function useConversations() {
   const store = new Store('store.bin.conversations')
   const conversations = ref<Conversation[]>([])
   const isFetching = ref(false)
-  const { chat: oChat, abort: oAbort } = useOllama()
+  const { chat: oChat, abort: oAbort } = useOllamaStore()
 
   onMounted(async () => {
     conversations.value = await store.values()
@@ -37,7 +37,7 @@ export function useConversations() {
     if (isFetching.value || !unref(content))
       return
     isFetching.value = true
-    item.messages.push({ role: 'user', content: unref(content) })
+    item.messages.push({ role: 'user', content: unref(content) ?? '' })
     store.set(String(item.createTime), item)
     if (isRef(content))
       content.value = ''
@@ -54,7 +54,7 @@ export function useConversations() {
 
   async function summarize(item: Conversation) {
     const [_m] = item.messages
-    const messages: Message[] = [{ role: 'user', content: `---BEGIN Conversation---\n${_m.content}\n---END Conversation---\nSummarize the conversation in 5 words or fewer:` }]
+    const messages: Message[] = [{ role: 'user', content: `---BEGIN Conversation---\n${_m!.content}\n---END Conversation---\nSummarize the conversation in 5 words or fewer:` }]
     const response = await oChat(messages)
     item.title = ''
     for await (const part of response)
