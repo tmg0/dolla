@@ -82,6 +82,6 @@ export function useConversations() {
     create,
     chat,
     abort,
-    remove
+    remove,
   }
 }

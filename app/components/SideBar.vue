@@ -41,10 +41,14 @@ function isSelected(index: number) {
       <div class="p-4 w-full h-full">
         <div class="p-3 flex flex-col justify-between h-full w-full rounded-xl bg-white">
           <div class="flex flex-col w-full gap-1 h-0 flex-1 overflow-y-auto">
-            <div class="text-gray-400 text-xs font-semibold mb-1 select-none">Recents</div>
+            <div class="text-gray-400 text-xs font-semibold mb-1 select-none">
+              Recents
+            </div>
             <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm flex items-center gap-2 select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800" :class="[isSelected(index) ? 'bg-gray-100 text-gray-800' : ' text-gray-600']" @click="select(index)">
               <UIcon name="i-heroicons-chat-bubble-left-right" class="flex-shrink-0 h-4 w-4 flex" @click="remove(index)" />
-              <div class="truncate">{{ item.title || 'New Chat' }}</div>
+              <div class="truncate">
+                {{ item.title || 'New Chat' }}
+              </div>
               <UIcon v-if="isSelected(index)" name="i-heroicons-trash" class="flex-shrink-0 h-4 w-4 flex" @click="remove(index)" />
             </div>
           </div>

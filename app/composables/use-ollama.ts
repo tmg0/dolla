@@ -1,20 +1,21 @@
 import { Ollama } from 'ollama/browser'
 
 interface Message {
-  role: 'user' | 'assistant',
+  role: 'user' | 'assistant'
   content: string
 }
 
 type OllamaContext = Ref<{
   host: string
   temperature: number
+  template: string
 }>
 
 export function useOllama() {
-  const options: OllamaContext = ref({ host: 'http://localhost:11434', temperature: 0.8 })
+  const options: OllamaContext = ref({ host: 'http://localhost:11434', temperature: 0.8, template: '' })
   let _ollama = new Ollama({ host: options.value.host })
 
-  const model  = ref('')
+  const model = ref('')
   const content = ref('')
   const { state } = useAsyncState(_ollama.list(), { models: [] })
   const models = computed(() => state.value.models)
@@ -54,7 +55,7 @@ const defaults = ref({
   host: '',
   temperature: 0.8,
   template: '',
-  proxy: ''
+  proxy: '',
 })
 
 export function useOllamaContext() {

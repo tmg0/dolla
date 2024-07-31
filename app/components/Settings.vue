@@ -2,25 +2,6 @@
 const ctx = useOllamaContext()
 
 const visible = ref(false)
-
-const items = [
-  {
-    slot: 'ollama',
-    label: 'Ollama',
-  },
-  {
-    slot: 'chroma',
-    label: 'Chroma',
-  },
-  {
-    slot: 'tools',
-    label: 'Tools',
-  },
-  {
-    slot: 'profile',
-    label: 'Profile',
-  },
-]
 </script>
 
 <template>

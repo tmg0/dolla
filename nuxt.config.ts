@@ -6,7 +6,13 @@ export default defineNuxtConfig({
   ssr: false,
   // Change defaults throughout your Nuxt configuration to Nuxt v4 behavior
   future: { compatibilityVersion: 4 },
-  modules: ['@nuxt/ui', '@vueuse/nuxt', '@vueuse/motion/nuxt'],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxt/ui',
+    '@vueuse/nuxt',
+    '@vueuse/motion/nuxt',
+    '@nuxt/eslint',
+  ],
   // Enables the development server to be discoverable by other devices for mobile development
   devServer: { host: '0.0.0.0' },
   vite: {
@@ -30,7 +36,11 @@ export default defineNuxtConfig({
     },
   },
 
+  pinia: {
+    storesDirs: ['./app/stores/**'],
+  },
+
   tailwindcss: {
-    cssPath: '~/src/assets/css/tailwind.css'
-  }
+    cssPath: '~/src/assets/css/tailwind.css',
+  },
 })
