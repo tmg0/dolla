@@ -80,8 +80,8 @@ async function handleRemove(index: number) {
 
     <div ref="domRef" class="w-full h-full relative z-0 overflow-y-auto pt-20 pb-[116px] flex flex-col gap-4 px-8 py-6">
       <div v-for="(item, index) in messages" :key="index" v-motion-slide-visible-once-bottom class="flex" :class="{ 'justify-end': item.role === 'user' }">
-        <div class="rounded-xl min-w-1 px-4 py-2 bg-gray-50">
-          <span class="mdit leading-7 text-black/75" v-html="md.render(item.content)" />
+        <div class="rounded-xl min-w-1 px-3 py-1.5" :class="[item.role === 'user' ? 'bg-[#2c7aff] text-white' : 'bg-[#e9e9eb] text-gray-900']">
+          <span class="mdit leading-7" v-html="md.render(item.content)" />
         </div>
       </div>
     </div>

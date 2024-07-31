@@ -12,7 +12,7 @@ const visible = ref(false)
 
     <UModal v-model="visible">
       <div class="p-4 flex flex-col w-full">
-        <div class="text-lg text-gray-800">
+        <div class="text-lg text-gray-900">
           Settings
         </div>
 

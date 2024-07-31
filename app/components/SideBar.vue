@@ -44,12 +44,12 @@ function isSelected(index: number) {
             <div class="text-gray-400 text-xs font-semibold mb-1 select-none">
               Recents
             </div>
-            <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm flex items-center gap-2 select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800" :class="[isSelected(index) ? 'bg-gray-100 text-gray-800' : ' text-gray-600']" @click="select(index)">
-              <UIcon name="i-heroicons-chat-bubble-left-right" class="flex-shrink-0 h-4 w-4 flex" @click="remove(index)" />
-              <div class="truncate">
+            <div v-for="(item, index) in conversations" :key="item.createTime" class="text-sm flex items-center justify-between gap-2 select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-900" :class="[isSelected(index) ? 'bg-gray-100 text-gray-900' : ' text-gray-600']" @click="select(index)">
+              <UIcon name="i-heroicons-chat-bubble-left-right" class="flex-shrink-0 h-4 w-4 flex" />
+              <div class="truncate flex-1">
                 {{ item.title || 'New Chat' }}
               </div>
-              <UIcon v-if="isSelected(index)" name="i-heroicons-trash" class="flex-shrink-0 h-4 w-4 flex" @click="remove(index)" />
+              <ConversationActionGroup v-if="isSelected(index)" @delete="remove(index)" />
             </div>
           </div>
 
@@ -58,7 +58,7 @@ function isSelected(index: number) {
 
             <div class="flex flex-col w-full gap-px text-gray-600">
               <Settings>
-                <div class="group/item flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-800">
+                <div class="group/item flex items-center gap-2 px-2 py-1 text-sm rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-900">
                   <UIcon name="i-heroicons-cog-8-tooth" class="flex-shrink-0 h-4 w-4 transition-all duration-300 group-hover/item:rotate-45" />
                   <span>Settings</span>
                 </div>
