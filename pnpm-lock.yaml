@@ -17,9 +17,6 @@ importers:
       '@tauri-apps/plugin-sql':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
-      '@tauri-apps/plugin-store':
-        specifier: 2.0.0-beta.7
-        version: 2.0.0-beta.7
       '@vueuse/motion':
         specifier: ^2.2.3
         version: 2.2.3(magicast@0.3.4)(rollup@4.19.1)(vue@3.4.34(typescript@5.5.4))
@@ -1418,9 +1415,6 @@ packages:
 
   '@tauri-apps/plugin-sql@2.0.0-beta.7':
     resolution: {integrity: sha512-VPJntJtyY0Y3UEwgRrG3C/BUNgFuWNdw1w2DuOvdiQtz97VT6DuJO7IPY+T9iYG0JfVqpKmJSHiuLvI6jZ/IMw==}
-
-  '@tauri-apps/plugin-store@2.0.0-beta.7':
-    resolution: {integrity: sha512-OgeicsLfN7/u/vfxhzJfsZsNfVJWrhmwhEn2oK4OJ1kvkrGbkfK0/ZORSkmqbpByI6hXWYZrbeyXDuVIefVWAQ==}
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -6449,10 +6443,6 @@ snapshots:
       '@tauri-apps/api': 2.0.0-beta.15
 
   '@tauri-apps/plugin-sql@2.0.0-beta.7':
-    dependencies:
-      '@tauri-apps/api': 2.0.0-beta.15
-
-  '@tauri-apps/plugin-store@2.0.0-beta.7':
     dependencies:
       '@tauri-apps/api': 2.0.0-beta.15
 
