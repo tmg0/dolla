@@ -1,5 +1,9 @@
 import { type Message, Ollama } from 'ollama/browser'
 
+interface Options {
+  data?: MaybeRef<string>
+}
+
 export const useOllamaStore = defineStore('ollama', () => {
   const model = ref('')
   const host = ref('http://localhost:11434')
@@ -14,8 +18,18 @@ export const useOllamaStore = defineStore('ollama', () => {
       model.value = values[0]?.name ?? ''
   })
 
-  function chat(messages: MaybeRef<Message[]>) {
-    return ollama.value.chat({ model: unref(model), messages: unref(messages), stream: true })
+  async function chat(messages: MaybeRef<Message[]>, options: Options = {}) {
+    const response = await ollama.value.chat({ model: unref(model), messages: unref(messages), stream: true })
+    if (!options.data)
+      return response
+    for await (const part of response) {
+      options.data += part.message.content
+    }
+    return response
+  }
+
+  function generate(prompt: MaybeRef<string>) {
+    return ollama.value.generate({ model: unref(model), prompt: unref(prompt), stream: false })
   }
 
   function abort() {
@@ -29,6 +43,7 @@ export const useOllamaStore = defineStore('ollama', () => {
     temperature,
     template,
     chat,
+    generate,
     abort,
   }
 })
