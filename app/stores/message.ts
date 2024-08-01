@@ -18,12 +18,12 @@ export const useMessageStore = defineStore('message', () => {
     if (isFetching.value || !unref(content) || !_id)
       return
     isFetching.value = true
-    const data: any = { role: 'user', content: unref(content) ?? '', conversation_id: _id }
+    const data: any = { role: 'user', content: unref(content) ?? '', conversation_id: _id, images: [] }
     messages.value.push(data)
     _insert(data)
     if (isRef(content))
       content.value = ''
-    const response = await oChat(messages.value)
+    const response = await oChat(messages)
     messages.value.push({ role: 'assistant', content: '', conversation_id: _id })
     for await (const part of response) {
       messages.value.at(-1)!.content += part.message.content
@@ -40,7 +40,6 @@ export const useMessageStore = defineStore('message', () => {
   async function _insert(message: Message) {
     const data = {
       role: message.role,
-      images: (message?.images ?? []).join(','),
       content: _encode(message.content),
       conversation_id: message.conversation_id,
     }

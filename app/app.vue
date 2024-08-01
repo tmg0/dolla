@@ -2,8 +2,6 @@
 const content = ref('')
 const offsetTop = ref(0)
 const { shift, enter } = useMagicKeys()
-const conversationStore = useConversationStore()
-const { conversations } = storeToRefs(conversationStore)
 const router = useRouter()
 const messageStore = useMessageStore()
 const { isNew, isFetching } = storeToRefs(messageStore)
@@ -46,13 +44,11 @@ function send() {
     <NuxtPage v-model:offset-top="offsetTop" />
 
     <div class="flex items-center px-8 py-6 gap-2 backdrop-blur bg-white/75 w-screen absolute bottom-0 z-10">
-      <div class="flex items-center w-full rounded-xl bg-gray-100">
-        <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" autoresize :rows="1" :maxrows="3" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
-        <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" size="xs" color="gray" class="flex-shrink-0 mx-3" @click="clickSuffix" />
+      <div class="flex items-center w-full rounded-xl bg-white border">
+        <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" :rows="1" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
+        <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" variant="ghost" color="gray" class="flex-shrink-0 mx-3" @click="clickSuffix" />
       </div>
     </div>
-
-    <SideBar v-if="conversations.length" class="absolute top-1/2 -translate-y-1/2 right-0" />
   </div>
 </template>
 

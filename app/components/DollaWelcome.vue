@@ -13,7 +13,7 @@ const formatted = computed(() => Number(now.value) - 500)
 
 const banner = computed(() => {
   const TXT = ['Good morning', 'Good afternoon', 'Good evening', 'Good night']
-  const index = TIME_RANGE.findIndex(([s, e]) => formatted.value > s && formatted.value < e)
+  const index = TIME_RANGE.findIndex(([s, e]) => formatted.value > s! && formatted.value < e!)
   return TXT[index]
 })
 </script>

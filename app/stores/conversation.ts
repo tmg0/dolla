@@ -1,7 +1,7 @@
 import type { Message as OMessage } from 'ollama/browser'
 
 interface CreateOptions {
-  afterCreate?: (c: Conversation) => void
+  afterCreate?: (c: Conversation) => void | Promise<void>
 }
 
 export const useConversationStore = defineStore('conversation', () => {
@@ -21,7 +21,8 @@ export const useConversationStore = defineStore('conversation', () => {
     const ctx = await createAndReturn<Conversation>('conversations', { data: { title: '' } })
     if (!ctx)
       return
-    options.afterCreate?.(ctx)
+    await options.afterCreate?.(ctx)
+    await fetch()
     await chat(content, ctx)
     await summarize(messages, ctx)
     await fetch()
@@ -34,13 +35,16 @@ export const useConversationStore = defineStore('conversation', () => {
   }
 
   async function summarize(m: Message[], ctx: Conversation) {
+    const item = conversations.value.find(({ id }) => id === ctx.id)
+    if (!item)
+      return
     const content = m.map(({ content }) => content).join(', ')
     const messages: OMessage[] = [{ role: 'user', content: `---BEGIN Conversation---\n${unref(content)}\n---END Conversation---\nSummarize the conversation in 5 words or fewer:` }]
     const response = await oChat(messages)
-    ctx.title = ''
+    item.title = ''
     for await (const part of response)
-      ctx.title += part.message.content
-    update('conversations', { data: { title: ctx.title }, where: { id: ctx.id } })
+      item.title += part.message.content
+    update('conversations', { data: { title: item.title }, where: { id: item.id } })
   }
 
   return {
