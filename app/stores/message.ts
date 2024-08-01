@@ -30,6 +30,7 @@ export const useMessageStore = defineStore('message', () => {
     }
     _insert(messages.value.at(-1) as any)
     isFetching.value = false
+    return messages.value.at(-1)!.content
   }
 
   function abort() {

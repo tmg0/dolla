@@ -7,7 +7,7 @@ export const useConversationStore = defineStore('conversation', () => {
   const { isReady, findMany, deleteMany } = useSqlite()
   const { generate } = useOllamaStore()
   const { createAndReturn, update } = useSqlite()
-  const { messages, chat } = useMessageStore()
+  const { chat } = useMessageStore()
 
   until(isReady).toBe(true).then(fetch)
 
@@ -21,8 +21,11 @@ export const useConversationStore = defineStore('conversation', () => {
       return
     await options.afterCreate?.(ctx)
     await fetch()
-    await chat(content, ctx)
-    await summarize(messages, ctx)
+    let prompt = `user: ${unref(content)}\n`
+    const response = await chat(content, ctx)
+    if (response)
+      prompt += `assistant: ${response}`
+    await summarize(prompt, ctx)
     await fetch()
   }
 
@@ -32,13 +35,12 @@ export const useConversationStore = defineStore('conversation', () => {
     fetch()
   }
 
-  async function summarize(m: Message[], ctx: Conversation) {
+  async function summarize(prompt: MaybeRef<string>, ctx: Conversation) {
     const item = conversations.value.find(({ id }) => id === ctx.id)
     if (!item)
       return
-    const txt = m.map(({ content }) => content).join('\n')
-    const prompt = `---BEGIN Conversation---\n${unref(txt)}\n---END Conversation---\nSummarize the conversation in 5 words or fewer:`
-    const { response } = await generate(prompt)
+    const query = `---BEGIN Conversation---\n${unref(prompt)}\n---END Conversation---\nSummarize the conversation in 5 words or fewer:`
+    const { response } = await generate(query)
     item.title = response
     update('conversations', { data: { title: item.title }, where: { id: item.id } })
   }
