@@ -3,12 +3,16 @@ import Shiki from '@shikijs/markdown-it'
 
 const md = markdownit()
 
-md.use(await Shiki({
-  themes: {
-    light: 'vitesse-dark',
-    dark: 'vitesse-dark',
-  },
-}))
+async function register() {
+  md.use(await Shiki({
+    themes: {
+      light: 'vitesse-dark',
+      dark: 'vitesse-dark',
+    },
+  }))
+}
+
+register()
 
 export function useMdit() {
   return {
