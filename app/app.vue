@@ -4,6 +4,7 @@ const offsetTop = ref(0)
 const { shift, enter } = useMagicKeys()
 const router = useRouter()
 const messageStore = useMessageStore()
+const conversationStore = useConversationStore()
 const { isNew, isFetching } = storeToRefs(messageStore)
 
 watchEffect(() => {
