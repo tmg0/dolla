@@ -3,7 +3,7 @@ import type Database from '@tauri-apps/plugin-sql'
 type Table = 'conversations' | 'messages'
 
 interface CreateOptions {
-  data: Record<string, string | number>
+  data: Record<string, string | number | undefined>
 }
 
 interface UpdateOptions {

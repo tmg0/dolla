@@ -10,8 +10,7 @@ export const useMessageStore = defineStore('message', () => {
     if (!id)
       return
     await until(isReady).toBe(true)
-    const query = { where: { conversation_id: id } }
-    messages.value = (await findMany<Message>('messages', query)) ?? []
+    messages.value = await _fetch(id)
   }, { immediate: true })
 
   async function chat(content: MaybeRef<string | undefined>, ctx?: Conversation) {
@@ -21,7 +20,7 @@ export const useMessageStore = defineStore('message', () => {
     isFetching.value = true
     const data: any = { role: 'user', content: unref(content) ?? '', conversation_id: _id }
     messages.value.push(data)
-    create('messages', { data })
+    _insert(data)
     if (isRef(content))
       content.value = ''
     const response = await oChat(messages.value)
@@ -29,13 +28,38 @@ export const useMessageStore = defineStore('message', () => {
     for await (const part of response) {
       messages.value.at(-1)!.content += part.message.content
     }
-    create('messages', { data: messages.value.at(-1) as any })
+    _insert(messages.value.at(-1) as any)
     isFetching.value = false
   }
 
   function abort() {
     oAbort()
     isFetching.value = false
+  }
+
+  async function _insert(message: Message) {
+    const data = {
+      role: message.role,
+      images: (message?.images ?? []).join(','),
+      content: _encode(message.content),
+      conversation_id: message.conversation_id,
+    }
+
+    await create('messages', { data })
+  }
+
+  async function _fetch(id: number) {
+    const query = { where: { conversation_id: id } }
+    const response = (await findMany<Message>('messages', query)) ?? []
+    return response.map(item => ({ ...item, content: _decode(item.content) }))
+  }
+
+  function _encode(value: string) {
+    return btoa(encodeURIComponent(value))
+  }
+
+  function _decode(value: string) {
+    return decodeURIComponent(atob(value))
   }
 
   return {
