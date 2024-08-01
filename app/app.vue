@@ -52,10 +52,3 @@ function send() {
     </div>
   </div>
 </template>
-
-<style>
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-</style>
