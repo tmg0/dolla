@@ -1,4 +1,5 @@
 import { klona } from 'klona/json'
+import { destr } from 'destr'
 
 interface Value {
   content: MaybeRef<string | undefined>
@@ -27,7 +28,7 @@ export const useMessageStore = defineStore('message', () => {
     if (isFetching.value || !unref(value.content) || !_id)
       return
     isFetching.value = true
-    const images = klona(unref(value.images) ?? [])
+    const images = value.images ? klona(unref(value.images)) : []
     const data: any = { role: 'user', content: unref(value.content) ?? '', conversation_id: _id, images }
     messages.value.push(data)
     _insert(data)
@@ -54,7 +55,7 @@ export const useMessageStore = defineStore('message', () => {
     const data = {
       role: message.role,
       content: _encode(message.content),
-      images: (message.images?.[0] ?? '') as string,
+      images: message.images ? _encode(JSON.stringify(message.images ?? [])) : '',
       conversation_id: message.conversation_id,
     }
 
@@ -63,8 +64,25 @@ export const useMessageStore = defineStore('message', () => {
 
   async function _fetch(id: number) {
     const query = { where: { conversation_id: id } }
-    const response = (await findMany<Message>('messages', query)) ?? []
-    return response.map(item => ({ ...item, content: _decode(item.content) }))
+    const response = (await findMany<Message & { images: string }>('messages', query)) ?? []
+
+    return response.map(item => ({
+      ...item,
+      content: _decode(item.content),
+      images: parseImages(_decode(item.images)),
+    }))
+  }
+
+  function parseImages(value?: string): string[] {
+    if (!value)
+      return []
+
+    try {
+      return destr<string[]>(value).filter(Boolean)
+    }
+    catch {
+      return []
+    }
   }
 
   function _encode(value: string) {

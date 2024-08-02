@@ -28,14 +28,17 @@ function scrollToBottom() {
 
 <template>
   <div ref="domRef" class="w-full h-full relative z-0 overflow-y-auto py-24 flex flex-col gap-4 px-8">
-    <div v-for="(item, index) in messages" :key="index" v-motion-slide-visible-once-bottom class="flex" :class="{ 'justify-end': item.role === 'user' }">
-      <div class="rounded-xl min-w-1 px-3 py-1.5" :class="[item.role === 'user' ? 'bg-[#2c7aff] text-white' : 'bg-[#e9e9eb] text-gray-600']">
-        <div v-if="item.images" class="w-14 h-14 bg-gray-500 rounded-lg overflow-hidden mt-1.5">
-          <img :src="`data:image/png;base64,${item.images}`" class="block w-full h-full">
-        </div>
-        <div class="mdit leading-7" v-html="md.render(item.content)" />
+    <template v-for="item in messages" :key="item.id">
+      <div v-if="item.images?.length" v-motion-slide-visible-once-bottom class="max-w-24 max-h-24 bg-gray-500 rounded-lg overflow-hidden flex-shrink-0" :class="{ 'ml-auto': item.role === 'user' }">
+        <img v-for="(image, i) in item.images ?? []" :key="i" :src="`data:image/png;base64,${image}`" class="block w-full h-full">
       </div>
-    </div>
+
+      <div v-motion-slide-visible-once-bottom class="flex" :class="{ 'justify-end': item.role === 'user' }">
+        <div class="rounded-xl min-w-1 px-3 py-1.5" :class="[item.role === 'user' ? 'bg-[#2c7aff] text-white' : 'bg-[#e9e9eb] text-gray-600']">
+          <div class="mdit leading-7" v-html="md.render(item.content)" />
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

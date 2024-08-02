@@ -1,6 +1,9 @@
 import type { Message as OMessage } from 'ollama/browser'
 
-export type Message = OMessage & { conversation_id: number }
+export type Message = OMessage & {
+  id: number
+  conversation_id: number
+}
 
 export interface Conversation {
   id: number
