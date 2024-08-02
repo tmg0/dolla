@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const content = ref('')
-const images = ref<string[]>([])
+const filepaths = ref<string[]>([])
 const offsetTop = ref(0)
 const { shift, enter } = useMagicKeys()
 const router = useRouter()
@@ -8,13 +8,13 @@ const messageStore = useMessageStore()
 const conversationStore = useConversationStore()
 const { isNew, isFetching } = storeToRefs(messageStore)
 
-const { isDragOver } = useFileDrop({
+const { isDragOver, files: images } = useFileDrop({
   accept: 'image/*',
   onDrop({ payload }) {
-    images.value = payload.paths
+    filepaths.value = payload.paths
   },
   onLeave() {
-    images.value = []
+    filepaths.value = []
   },
 })
 
@@ -36,7 +36,7 @@ function clickSuffix() {
 
 function send() {
   if (isNew.value && content.value) {
-    conversationStore.create(content, {
+    conversationStore.create({ content, images }, {
       afterCreate({ id }) {
         router.replace(`/${id}`)
       },
@@ -59,7 +59,7 @@ function send() {
       <div class="flex flex-col w-full rounded-xl bg-white border">
         <div v-if="images.length" class="flex gap-2 items-center px-3.5 mt-2.5">
           <div v-for="(image, index) in images" :key="index" class="w-14 h-14 bg-gray-500 rounded-lg overflow-hidden">
-            <img :src="image" class="block w-full h-full">
+            <img :src="`data:image/png;base64,${image}`" class="block w-full h-full">
           </div>
         </div>
 

@@ -29,6 +29,9 @@ importers:
       destr:
         specifier: ^2.0.3
         version: 2.0.3
+      klona:
+        specifier: ^2.0.6
+        version: 2.0.6
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0

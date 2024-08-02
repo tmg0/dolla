@@ -2,6 +2,11 @@ interface CreateOptions {
   afterCreate?: (c: Conversation) => void | Promise<void>
 }
 
+interface Value {
+  content: MaybeRef<string | undefined>
+  images?: MaybeRef<string[] | Uint8Array[]>
+}
+
 export const useConversationStore = defineStore('conversation', () => {
   const conversations = ref<Conversation[]>([])
   const { isReady, findMany, deleteMany } = useSqlite()
@@ -15,14 +20,14 @@ export const useConversationStore = defineStore('conversation', () => {
     conversations.value = (await findMany<Conversation>('conversations')) ?? []
   }
 
-  async function create(content: MaybeRef<string>, options: CreateOptions = {}) {
+  async function create({ content, images }: Value, options: CreateOptions = {}) {
     const ctx = await createAndReturn<Conversation>('conversations', { data: { title: '' } })
     if (!ctx)
       return
     await options.afterCreate?.(ctx)
     await fetch()
     let prompt = `user: ${unref(content)}\n`
-    const response = await chat(content, ctx)
+    const response = await chat({ content, images }, ctx)
     if (response)
       prompt += `assistant: ${response}`
     await summarize(prompt, ctx)

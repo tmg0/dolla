@@ -1,6 +1,8 @@
-interface ChatOptions {
+import { klona } from 'klona/json'
+
+interface Value {
   content: MaybeRef<string | undefined>
-  images?: MaybeRef<string[]>
+  images?: MaybeRef<string[] | Uint8Array[]>
 }
 
 export const useMessageStore = defineStore('message', () => {
@@ -12,25 +14,27 @@ export const useMessageStore = defineStore('message', () => {
   const isNew = computed(() => !conversationId.value)
 
   watch(conversationId, async (id) => {
+    messages.value = []
+    abort()
     if (!id)
       return
-    abort()
     await until(isReady).toBe(true)
     messages.value = await _fetch(id)
   }, { immediate: true })
 
-  async function chat(options: ChatOptions, ctx?: Conversation) {
+  async function chat(value: Value, ctx?: Conversation) {
     const _id = ctx?.id ?? conversationId.value
-    if (isFetching.value || !unref(options.content) || !_id)
+    if (isFetching.value || !unref(value.content) || !_id)
       return
     isFetching.value = true
-    const data: any = { role: 'user', content: unref(options.content) ?? '', conversation_id: _id, images: options.images ?? [] }
+    const images = klona(unref(value.images) ?? [])
+    const data: any = { role: 'user', content: unref(value.content) ?? '', conversation_id: _id, images }
     messages.value.push(data)
     _insert(data)
-    if (isRef(options.content))
-      options.content.value = ''
-    if (isRef(options.images))
-      options.images.value = []
+    if (isRef(value.content))
+      value.content.value = ''
+    if (isRef(value.images))
+      value.images.value = []
     const response = await oChat(messages)
     messages.value.push({ role: 'assistant', content: '', conversation_id: _id })
     for await (const part of response) {
@@ -50,6 +54,7 @@ export const useMessageStore = defineStore('message', () => {
     const data = {
       role: message.role,
       content: _encode(message.content),
+      images: (message.images?.[0] ?? '') as string,
       conversation_id: message.conversation_id,
     }
 
