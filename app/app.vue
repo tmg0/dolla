@@ -1,11 +1,22 @@
 <script setup lang="ts">
 const content = ref('')
+const images = ref<string[]>([])
 const offsetTop = ref(0)
 const { shift, enter } = useMagicKeys()
 const router = useRouter()
 const messageStore = useMessageStore()
 const conversationStore = useConversationStore()
 const { isNew, isFetching } = storeToRefs(messageStore)
+
+const { isDragOver } = useFileDrop({
+  accept: 'image/*',
+  onDrop({ payload }) {
+    images.value = payload.paths
+  },
+  onLeave() {
+    images.value = []
+  },
+})
 
 watchEffect(() => {
   if (shift?.value && enter?.value)
@@ -34,7 +45,7 @@ function send() {
     return
   }
 
-  messageStore.chat(content)
+  messageStore.chat({ content, images })
 }
 </script>
 
@@ -44,11 +55,21 @@ function send() {
 
     <NuxtPage v-model:offset-top="offsetTop" />
 
-    <div class="flex items-center px-8 py-6 gap-2 backdrop-blur bg-white/75 w-screen absolute bottom-0 z-10">
-      <div class="flex items-center w-full rounded-xl bg-white border">
-        <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" :rows="1" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
-        <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" variant="ghost" color="gray" class="flex-shrink-0 mx-3" @click="clickSuffix" />
+    <div class="flex flex-col px-8 py-6 gap-2 backdrop-blur bg-white/75 w-screen absolute bottom-0 z-10">
+      <div class="flex flex-col w-full rounded-xl bg-white border">
+        <div v-if="images.length" class="flex gap-2 items-center px-3.5 mt-2.5">
+          <div v-for="(image, index) in images" :key="index" class="w-14 h-14 bg-gray-500 rounded-lg overflow-hidden">
+            <img :src="image" class="block w-full h-full">
+          </div>
+        </div>
+
+        <div class="flex items-center w-full">
+          <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" :rows="1" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
+          <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" variant="ghost" color="gray" class="flex-shrink-0 mx-3" @click="clickSuffix" />
+        </div>
       </div>
     </div>
+
+    <DragOverlay v-if="isDragOver" />
   </div>
 </template>

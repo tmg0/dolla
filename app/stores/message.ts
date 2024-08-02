@@ -1,3 +1,8 @@
+interface ChatOptions {
+  content: MaybeRef<string | undefined>
+  images?: MaybeRef<string[]>
+}
+
 export const useMessageStore = defineStore('message', () => {
   const conversationId = useRouteParams('id', '', { transform: val => val ? Number(val) : undefined })
   const messages = ref<Message[]>([])
@@ -9,20 +14,23 @@ export const useMessageStore = defineStore('message', () => {
   watch(conversationId, async (id) => {
     if (!id)
       return
+    abort()
     await until(isReady).toBe(true)
     messages.value = await _fetch(id)
   }, { immediate: true })
 
-  async function chat(content: MaybeRef<string | undefined>, ctx?: Conversation) {
+  async function chat(options: ChatOptions, ctx?: Conversation) {
     const _id = ctx?.id ?? conversationId.value
-    if (isFetching.value || !unref(content) || !_id)
+    if (isFetching.value || !unref(options.content) || !_id)
       return
     isFetching.value = true
-    const data: any = { role: 'user', content: unref(content) ?? '', conversation_id: _id, images: [] }
+    const data: any = { role: 'user', content: unref(options.content) ?? '', conversation_id: _id, images: options.images ?? [] }
     messages.value.push(data)
     _insert(data)
-    if (isRef(content))
-      content.value = ''
+    if (isRef(options.content))
+      options.content.value = ''
+    if (isRef(options.images))
+      options.images.value = []
     const response = await oChat(messages)
     messages.value.push({ role: 'assistant', content: '', conversation_id: _id })
     for await (const part of response) {

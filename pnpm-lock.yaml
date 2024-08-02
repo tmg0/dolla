@@ -11,6 +11,9 @@ importers:
       '@pinia/nuxt':
         specifier: ^0.5.2
         version: 0.5.2(magicast@0.3.4)(rollup@4.19.1)(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4))
+      '@tauri-apps/api':
+        specifier: ^2.0.0-beta.16
+        version: 2.0.0-beta.16
       '@tauri-apps/plugin-fs':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
@@ -1343,6 +1346,10 @@ packages:
 
   '@tauri-apps/api@2.0.0-beta.15':
     resolution: {integrity: sha512-H9w6iISmR+NvH4XuyCZB4zDN10tf9RFt6i/9JHEjaRhAowdAaJ+oiXq/3kedizNClHMtbTQ5j0oqDVPkZDAI8g==}
+    engines: {node: '>= 18.18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
+
+  '@tauri-apps/api@2.0.0-beta.16':
+    resolution: {integrity: sha512-YGjkR9HxS/YyIoqoXDkk8o9Yy5NW6u9YxzeqEodwwOUoeS0nac6mzLTW3VYIuSelHmyUQCgbyENVY6e5CJXA4Q==}
     engines: {node: '>= 18.18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
 
   '@tauri-apps/cli-darwin-arm64@2.0.0-beta.22':
@@ -6394,6 +6401,8 @@ snapshots:
       vue: 3.4.34(typescript@5.5.4)
 
   '@tauri-apps/api@2.0.0-beta.15': {}
+
+  '@tauri-apps/api@2.0.0-beta.16': {}
 
   '@tauri-apps/cli-darwin-arm64@2.0.0-beta.22':
     optional: true
