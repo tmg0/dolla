@@ -20,7 +20,7 @@ const items = [[
 
 <template>
   <UDropdown mode="hover" :items="items" :ui="{ width: 'w-24' }" :popper="{ placement: 'bottom-start' }">
-    <UIcon name="i-heroicons-ellipsis-vertical" class="flex-shrink-0 h-4 w-4 flex" />
+    <UIcon name="i-heroicons-ellipsis-vertical" class="flex-shrink-0 h-4 w-4 flex cursor-pointer" @click.stop />
 
     <template #delete="{ item }">
       <div class="flex items-center gap-2 text-red-500">

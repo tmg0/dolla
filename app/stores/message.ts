@@ -37,7 +37,7 @@ export const useMessageStore = defineStore('message', () => {
     if (isRef(value.images))
       value.images.value = []
     const response = await oChat(messages)
-    messages.value.push({ role: 'assistant', content: '', conversation_id: _id })
+    messages.value.push({ role: 'assistant', content: '', conversation_id: _id } as any)
     for await (const part of response) {
       messages.value.at(-1)!.content += part.message.content
     }

@@ -1,11 +1,8 @@
 import { type Message, Ollama } from 'ollama/browser'
-
-interface Options {
-  data?: MaybeRef<string>
-}
+import { emit, tools } from '@dolla/tools'
 
 export const useOllamaStore = defineStore('ollama', () => {
-  const model = ref('')
+  const model = ref('llama3.1:latest')
   const host = ref('http://localhost:11434')
   const temperature = ref(0.8)
   const template = ref('')
@@ -13,19 +10,26 @@ export const useOllamaStore = defineStore('ollama', () => {
   const { state } = useAsyncState(ollama.value.list(), { models: [] })
   const models = computed(() => state.value.models)
 
-  watch(models, (values) => {
-    if (values.length)
-      model.value = values[0]?.name ?? ''
-  })
-
-  async function chat(messages: MaybeRef<Message[]>, options: Options = {}) {
-    const response = await ollama.value.chat({ model: unref(model), messages: unref(messages), stream: true })
-    if (!options.data)
-      return response
-    for await (const part of response) {
-      options.data += part.message.content
+  async function chat(messages: MaybeRef<Message[]>) {
+    if (tools.length && models.value.some(({ name }) => name.includes('mistral'))) {
+      try {
+        const response = await ollama.value.chat({ model: 'mistral', messages: unref(messages), stream: false, tools })
+        if (response.message.tool_calls) {
+          for await (const tool of response.message.tool_calls) {
+            const r = await emit(tool.function.name, tool.function.arguments)
+            unref(messages).push({
+              role: 'tool',
+              content: r,
+            })
+          }
+        }
+      }
+      catch (error) {
+        console.error(error)
+      }
     }
-    return response
+
+    return ollama.value.chat({ model: unref(model), messages: unref(messages), stream: true })
   }
 
   function generate(prompt: MaybeRef<string>) {
@@ -39,6 +43,7 @@ export const useOllamaStore = defineStore('ollama', () => {
   return {
     ollama,
     model,
+    models,
     host,
     temperature,
     template,

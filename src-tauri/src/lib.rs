@@ -1,4 +1,4 @@
-mod ollama;
+mod core;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -7,7 +7,7 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_sql::Builder::default().build())
         .setup(|app| {
-          ollama::run_ollama_serve(app);
+          core::setup(app);
           Ok(())
         })
         .run(tauri::generate_context!())
