@@ -1,6 +1,4 @@
 <script setup lang="ts">
-await runOllamaServe()
-
 const content = ref('')
 const filepaths = ref<string[]>([])
 const offsetTop = ref(0)
