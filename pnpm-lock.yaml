@@ -17,6 +17,9 @@ importers:
       '@tauri-apps/plugin-fs':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
+      '@tauri-apps/plugin-shell':
+        specifier: 2.0.0-rc.0
+        version: 2.0.0-rc.0
       '@tauri-apps/plugin-sql':
         specifier: 2.0.0-beta.7
         version: 2.0.0-beta.7
@@ -1355,6 +1358,10 @@ packages:
     resolution: {integrity: sha512-YGjkR9HxS/YyIoqoXDkk8o9Yy5NW6u9YxzeqEodwwOUoeS0nac6mzLTW3VYIuSelHmyUQCgbyENVY6e5CJXA4Q==}
     engines: {node: '>= 18.18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
 
+  '@tauri-apps/api@2.0.0-rc.0':
+    resolution: {integrity: sha512-v454Qs3REHc3Za59U+/eSmBsdmF+3NE5+76+lFDaitVqN4ZglDHENDaMARYKGJVZuxiSkzyqG0SeG7lLQjVkPA==}
+    engines: {node: '>= 18.18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
+
   '@tauri-apps/cli-darwin-arm64@2.0.0-beta.22':
     resolution: {integrity: sha512-Ofhythvg1Ks2IM87WUYNtgFzm21aU1Zn+8QP81lJy9Y7ZGMxP8FYfqeHz6GIWKI+CYf6I77HA8LHkT9pyE5PYg==}
     engines: {node: '>= 10'}
@@ -1422,6 +1429,9 @@ packages:
 
   '@tauri-apps/plugin-fs@2.0.0-beta.7':
     resolution: {integrity: sha512-hsZyhzvy+xtRfbrKI2rmU1ZfmgbSs7Zu/6a12MFlJKVzqXmUwJvggcjYdm1cEFdLbnOOsszENXbwMnkzmxtirA==}
+
+  '@tauri-apps/plugin-shell@2.0.0-rc.0':
+    resolution: {integrity: sha512-bhUcQcrqZoK8H1DFXapr5r1Z75oh6Kd5Tltz97XpZFLREEqp+KhN2Fvyh8r/fKAyenYsTYUIsDsyGdjdueuF9g==}
 
   '@tauri-apps/plugin-sql@2.0.0-beta.7':
     resolution: {integrity: sha512-VPJntJtyY0Y3UEwgRrG3C/BUNgFuWNdw1w2DuOvdiQtz97VT6DuJO7IPY+T9iYG0JfVqpKmJSHiuLvI6jZ/IMw==}
@@ -4974,7 +4984,7 @@ snapshots:
       '@antfu/install-pkg': 0.3.3
       '@clack/prompts': 0.7.0
       '@stylistic/eslint-plugin': 2.6.0-beta.1(eslint@8.57.0)(typescript@5.5.4)
-      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/parser': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
       eslint: 8.57.0
       eslint-config-flat-gitignore: 0.1.8
@@ -6407,6 +6417,8 @@ snapshots:
 
   '@tauri-apps/api@2.0.0-beta.16': {}
 
+  '@tauri-apps/api@2.0.0-rc.0': {}
+
   '@tauri-apps/cli-darwin-arm64@2.0.0-beta.22':
     optional: true
 
@@ -6453,6 +6465,10 @@ snapshots:
   '@tauri-apps/plugin-fs@2.0.0-beta.7':
     dependencies:
       '@tauri-apps/api': 2.0.0-beta.15
+
+  '@tauri-apps/plugin-shell@2.0.0-rc.0':
+    dependencies:
+      '@tauri-apps/api': 2.0.0-rc.0
 
   '@tauri-apps/plugin-sql@2.0.0-beta.7':
     dependencies:
@@ -6527,10 +6543,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/eslint-plugin@8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)':
+  '@typescript-eslint/eslint-plugin@8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)':
     dependencies:
       '@eslint-community/regexpp': 4.11.0
-      '@typescript-eslint/parser': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/scope-manager': 8.0.0-alpha.40
       '@typescript-eslint/type-utils': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/utils': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
@@ -7824,14 +7840,14 @@ snapshots:
       eslint: 8.57.0
       eslint-rule-composer: 0.3.0
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
 
   eslint-plugin-vitest@0.5.4(@typescript-eslint/eslint-plugin@8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4):
     dependencies:
       '@typescript-eslint/utils': 7.18.0(eslint@8.57.0)(typescript@5.5.4)
       eslint: 8.57.0
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
     transitivePeerDependencies:
       - supports-color
       - typescript

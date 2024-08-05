@@ -6,20 +6,20 @@
     "main"
   ],
   "permissions": [
-    "path:default",
-    "event:default",
-    "window:default",
-    "window:allow-close",
-    "window:allow-minimize",
-    "window:allow-start-dragging",
-    "window:allow-toggle-maximize",
-    "window:allow-internal-toggle-maximize",
-    "webview:default",
-    "app:default",
-    "resources:default",
-    "image:default",
-    "menu:default",
-    "tray:default",
+    "core:path:default",
+    "core:event:default",
+    "core:window:default",
+    "core:window:allow-close",
+    "core:window:allow-minimize",
+    "core:window:allow-start-dragging",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-internal-toggle-maximize",
+    "core:webview:default",
+    "core:app:default",
+    "core:resources:default",
+    "core:image:default",
+    "core:menu:default",
+    "core:tray:default",
     "sql:allow-load",
     "sql:allow-select",
     "sql:allow-execute",
@@ -27,7 +27,26 @@
     "fs:default",
     {
       "identifier": "fs:allow-create",
-      "allow": [{ "path": "$APPDATA/*" }]
+      "allow": [
+        {
+          "path": "$APPDATA/*"
+        }
+      ]
+    },
+    "shell:default",
+    "shell:allow-open",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "binaries/ollama",
+          "cmd": "",
+          "args": [
+            "serve"
+          ],
+          "sidecar": true
+        }
+      ]
     }
   ]
 }
