@@ -15,6 +15,11 @@ export default defineNuxtConfig({
   ],
   // Enables the development server to be discoverable by other devices for mobile development
   devServer: { host: '0.0.0.0' },
+
+  imports: {
+    dirs: ['constants'],
+  },
+
   vite: {
     // Better support for Tauri CLI output
     clearScreen: false,

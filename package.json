@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt generate",
-    "dev": "pnpm dev:tools && nuxt dev",
+    "dev": "nuxt dev",
     "dev:tools": "cd packages/tools && pnpm dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
