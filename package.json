@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "nuxt generate",
-    "dev": "nuxt dev",
-    "dev:tools": "cd packages/tools && pnpm dev",
+    "build": "tsx scripts/build",
+    "dev": "tsx scripts/dev",
+    "clean": "rimraf src-tauri/target",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . --ignore-pattern src-tauri/",
@@ -38,7 +38,10 @@
     "@types/markdown-it": "^14.1.2",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
+    "execa": "^9.3.0",
     "nuxt": "^3.12.4",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.16.5",
     "typescript": "^5.5.4"
   }
 }

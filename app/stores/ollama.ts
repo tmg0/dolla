@@ -16,9 +16,10 @@ export const useOllamaStore = defineStore('ollama', () => {
 
   async function chat(messages: MaybeRef<Message[]>, options: ChatOptions = {}) {
     const _model = MODELS.filter(({ features }) => features?.includes('tools'))[0]
-    if (tools.length && _model && models.value.some(({ name }) => name.includes(_model.name))) {
+    const { name } = (_model ? models.value.find(({ name }) => name.includes(_model.name)) : undefined) ?? {}
+    if (tools.length && name) {
       try {
-        const response = await ollama.value.chat({ model: 'mistral', messages: unref(messages), stream: false, tools })
+        const response = await ollama.value.chat({ model: name, messages: unref(messages), stream: false, tools })
         if (response.message.tool_calls) {
           for await (const tool of response.message.tool_calls) {
             const r = await emit(tool.function.name, tool.function.arguments)
