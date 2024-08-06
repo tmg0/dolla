@@ -1,7 +1,7 @@
 import type { Message as OMessage } from 'ollama/browser'
 
 export type Message = OMessage & {
-  id: number
+  id?: number
   conversation_id: number
 }
 

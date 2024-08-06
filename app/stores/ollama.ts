@@ -1,6 +1,10 @@
 import { type Message, Ollama } from 'ollama/browser'
 import { emit, tools } from '@dolla/tools'
 
+interface ChatOptions {
+  afterToolCalling?: (response: string) => void | Promise<void>
+}
+
 export const useOllamaStore = defineStore('ollama', () => {
   const model = ref([MODELS[0]?.name, MODELS[0]?.tags?.[0]].join(':'))
   const host = ref('http://localhost:11434')
@@ -10,7 +14,7 @@ export const useOllamaStore = defineStore('ollama', () => {
   const { state } = useAsyncState(ollama.value.list(), { models: [] })
   const models = computed(() => state.value.models)
 
-  async function chat(messages: MaybeRef<Message[]>) {
+  async function chat(messages: MaybeRef<Message[]>, options: ChatOptions = {}) {
     const _model = MODELS.filter(({ features }) => features?.includes('tools'))[0]
     if (tools.length && _model && models.value.some(({ name }) => name.includes(_model.name))) {
       try {
@@ -18,10 +22,7 @@ export const useOllamaStore = defineStore('ollama', () => {
         if (response.message.tool_calls) {
           for await (const tool of response.message.tool_calls) {
             const r = await emit(tool.function.name, tool.function.arguments)
-            unref(messages).push({
-              role: 'tool',
-              content: r,
-            })
+            await options.afterToolCalling?.(r)
           }
         }
       }
