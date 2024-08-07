@@ -18,12 +18,16 @@ export const useOllamaStore = defineStore('ollama', () => {
     const _model = MODELS.filter(({ features }) => features?.includes('tools'))[0]
     const { name } = (_model ? models.value.find(({ name }) => name.includes(_model.name)) : undefined) ?? {}
     if (tools.length && name) {
+      const done: string[] = []
       try {
         const response = await ollama.value.chat({ model: name, messages: unref(messages), stream: false, tools })
         if (response.message.tool_calls) {
           for await (const tool of response.message.tool_calls) {
+            if (done.includes(tool.function.name))
+              continue
             const r = await emit(tool.function.name, tool.function.arguments)
             await options.afterToolCalling?.(r)
+            done.push(tool.function.name)
           }
         }
       }

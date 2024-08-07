@@ -9,7 +9,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="domRef" class="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 text-white">
+  <div ref="domRef" class="fixed z-50 inset-0 transition-opacity bg-gray-200/75 dark:bg-gray-800/75">
     <div data-tauri-drag-region class="h-6" />
   </div>
 </template>
