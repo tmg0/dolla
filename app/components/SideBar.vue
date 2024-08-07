@@ -39,7 +39,7 @@ async function removeItem(id: number) {
           <ConversationActionGroup v-if="isSelected(item.id)" @delete="removeItem(item.id)" />
         </div>
 
-        <Placeholder v-if="!conversations.length" class="h-full mb-2" />
+        <Placeholder v-if="!conversations.length" class="h-full mb-4" />
       </div>
 
       <div>
