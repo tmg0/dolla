@@ -31,3 +31,6 @@ tauri-plugin-shell = "2.0.0-rc.0"
 [dependencies.tauri-plugin-sql]
 features = [ "sqlite" ]
 version = "2.0.0-beta"
+
+[target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
+tauri-plugin-single-instance = "2.0.0-rc.0"
