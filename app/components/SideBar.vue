@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const visible = defineModel()
+const visible = defineModel<boolean>()
 const router = useRouter()
 const store = useConversationStore()
 const { conversations } = storeToRefs(store)
@@ -30,6 +30,7 @@ async function removeItem(id: number) {
         <div class="text-gray-400 text-xs font-semibold mb-1 select-none">
           Recents
         </div>
+
         <div v-for="item in conversations" :key="item.id" class="text-sm flex items-center justify-between gap-2 select-none px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:text-gray-900" :class="[isSelected(item.id) ? 'bg-gray-100 text-gray-900' : ' text-gray-600']" @click="select(item.id)">
           <UIcon name="i-heroicons-chat-bubble-left-right" class="flex-shrink-0 h-4 w-4 flex" />
           <div class="truncate flex-1">
@@ -37,6 +38,8 @@ async function removeItem(id: number) {
           </div>
           <ConversationActionGroup v-if="isSelected(item.id)" @delete="removeItem(item.id)" />
         </div>
+
+        <Placeholder v-if="!conversations.length" class="h-full mb-2" />
       </div>
 
       <div>

@@ -1,16 +1,21 @@
 import type { Tool as OTool } from 'ollama/browser'
-import now, { schema } from './now'
+import type { Tool } from './core'
+import now from './now'
 
-type Tool = (...args: any[]) => string | Promise<string>
+const _modules = [now]
+export const tools: OTool[] = _modules.map(([schema]) => schema)
 
-export const defineTool = (options: OTool) => options
-
-export const tools = [defineTool(schema)]
+const _fns = (() => {
+  const map: Record<string, Tool> = {}
+  _modules.forEach(([schema, cb]) => {
+    const key = schema.function.name
+    map[key] = cb
+  })
+  return map
+})()
 
 export async function emit(key: string, params?: any) {
-  const core: Record<string, Tool> = { now }
-  const [scope, e] = key.split(':')
-  if (scope === 'core' && e && core[e])
-    return await core[e](params)
+  if (_fns[key])
+    return await _fns[key](params)
   return ''
 }

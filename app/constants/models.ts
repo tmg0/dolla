@@ -10,10 +10,6 @@ export const MODELS: Model[] = [
   {
     name: 'llama3.1',
     tags: ['latest'],
-  },
-  {
-    name: 'mistral',
-    tags: ['latest'],
     features: ['tools'],
   },
 ]

@@ -1,8 +1,11 @@
-export const schema = {
+import { nanoid } from 'nanoid/non-secure'
+import { defineTool } from '../core'
+
+const schema = {
   type: 'function',
   function: {
-    name: 'core:now',
-    description: 'Get current date time string',
+    name: nanoid(),
+    description: 'Get a string with a language-sensitive representation of current date time in the local timezone.',
     parameters: {
       type: 'object',
       properties: {},
@@ -11,6 +14,6 @@ export const schema = {
   },
 }
 
-export default function () {
-  return String(new Date())
-}
+export default defineTool(schema, () => {
+  return new Date().toLocaleString()
+})

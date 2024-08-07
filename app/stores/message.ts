@@ -28,8 +28,10 @@ export const useMessageStore = defineStore('message', () => {
     if (isFetching.value || !unref(value.content) || !_id)
       return
     isFetching.value = true
-    const images = value.images ? klona(unref(value.images)) : []
-    const data: any = { role: 'user', content: unref(value.content) ?? '', conversation_id: _id, images }
+    const images = klona(unref(value.images))
+    const data: any = { role: 'user', content: unref(value.content) ?? '', conversation_id: _id }
+    if (images?.length)
+      data.images = images
     messages.value.push(data)
     _insert(data)
     if (isRef(value.content))
