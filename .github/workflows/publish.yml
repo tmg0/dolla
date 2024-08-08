@@ -1,4 +1,4 @@
-name: "publish"
+name: publish
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       reason:
         description: ''
         required: true
-        default: 'Manual'
+        default: Manual
 
 jobs:
   publish-tauri:
@@ -20,10 +20,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest" # for Arm based macs (M1 and above).
-            args: "--target aarch64-apple-darwin"
-          - platform: "macos-latest" # for Intel based macs.
-            args: "--target x86_64-apple-darwin"
+          - platform: macos-latest # for Arm based macs (M1 and above).
+            args: --target aarch64-apple-darwin
+          - platform: macos-latest # for Intel based macs.
+            args: --target x86_64-apple-darwin
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -48,8 +48,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-          releaseName: "v__VERSION__"
-          releaseBody: "See the assets to download this version and install."
+          releaseName: v__VERSION__
+          releaseBody: See the assets to download this version and install.
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}

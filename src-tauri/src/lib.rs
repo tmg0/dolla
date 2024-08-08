@@ -1,3 +1,5 @@
+use tauri::{Manager, WindowEvent};
+
 mod core;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -10,6 +12,13 @@ pub fn run() {
         .setup(|app| {
             core::setup(app);
             Ok(())
+        })
+        .on_window_event(move |window, event| {
+            let app_handle = window.app_handle();
+            match event {
+                WindowEvent::Destroyed => core::cleanup(app_handle),
+                _ => {}
+            }
         })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,7 +1,7 @@
 {
   "name": "dolla",
-  "version": "0.0.1-alpha.5",
   "type": "module",
+  "version": "0.0.1-alpha.5",
   "private": true,
   "scripts": {
     "build": "tsx scripts/build",
@@ -10,7 +10,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . --ignore-pattern src-tauri/",
-    "lint:fix": "eslint . --fix --ignore-pattern src-tauri/"
+    "lint:fix": "tsx scripts/fmt"
   },
   "dependencies": {
     "@dolla/tools": "workspace:*",
