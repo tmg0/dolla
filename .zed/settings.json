@@ -5,5 +5,11 @@
     "code_actions": {
       "source.fixAll.eslint": true
     }
+  },
+
+  "languages": {
+    "Rust": {
+      "tab_size": 4
+    }
   }
 }
