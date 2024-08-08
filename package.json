@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsx scripts/build",
     "dev": "tsx scripts/dev",
-    "clean": "rimraf src-tauri/target",
+    "clean": "tsx scripts/clean",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . --ignore-pattern src-tauri/",
