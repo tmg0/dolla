@@ -11,9 +11,10 @@ struct GlobalState {
     services: Vec<CommandChild>,
 }
 
-pub fn setup(app: &App) {
+pub fn setup(app: &App) -> Result<(), Box<dyn std::error::Error>> {
     app.manage(Mutex::new(GlobalState::default()));
     ollama::run_ollama_serve(app);
+    Ok(())
 }
 
 pub fn cleanup(app: &AppHandle) {
