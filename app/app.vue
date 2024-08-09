@@ -21,11 +21,14 @@ function clickSuffix() {
 }
 
 function send() {
+  if (!content.value)
+    return
+
   if (isNew.value && content.value) {
     conversationStore.create({ content, images }, {
       async afterCreate({ id }) {
         router.replace({ path: `/${id}` })
-        await sleep(16)
+        await sleep()
       },
     })
 

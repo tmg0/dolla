@@ -5,6 +5,7 @@ use tauri::{App, AppHandle, Manager};
 use tauri_plugin_shell::process::CommandChild;
 
 pub mod ollama;
+pub mod tray;
 
 #[derive(Default)]
 struct GlobalState {
@@ -13,6 +14,8 @@ struct GlobalState {
 
 pub fn setup(app: &App) -> Result<(), Box<dyn std::error::Error>> {
     app.manage(Mutex::new(GlobalState::default()));
+    let app = app.handle();
+    tray::setup_tray(app);
     ollama::run_ollama_serve(app);
     Ok(())
 }
