@@ -5,6 +5,10 @@ interface Options {
   baseDir: BaseDirectory
 }
 
+export function sleep(ms = 500) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 export async function ensureDir(dir: string, options: Options = { baseDir: BaseDirectory.AppData }) {
   const e = await exists(dir, options)
   if (!e)

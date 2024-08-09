@@ -23,8 +23,9 @@ function clickSuffix() {
 function send() {
   if (isNew.value && content.value) {
     conversationStore.create({ content, images }, {
-      afterCreate({ id }) {
-        router.replace(`/${id}`)
+      async afterCreate({ id }) {
+        router.replace({ path: `/${id}` })
+        await sleep(16)
       },
     })
 

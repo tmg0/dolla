@@ -24,8 +24,8 @@ export const useConversationStore = defineStore('conversation', () => {
     const ctx = await createAndReturn<Conversation>('conversations', { data: { title: '' } })
     if (!ctx)
       return
-    await options.afterCreate?.(ctx)
     await fetch()
+    await options.afterCreate?.(ctx)
     let prompt = `user: ${unref(content)}\n`
     const response = await chat({ content, images }, ctx)
     if (response)
