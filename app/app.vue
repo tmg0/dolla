@@ -50,7 +50,7 @@ function send() {
         </div>
 
         <div class="flex items-center w-full">
-          <UTextarea v-model="content" :disabled="isFetching" autofocus size="xl" color="gray" variant="none" :rows="1" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
+          <UTextarea v-model="content" :disabled="isFetching" autofocus autoresize size="xl" color="gray" variant="none" :rows="1" :maxrows="3" :placeholder="isFetching ? 'Loading...' : 'Enter a prompt here...'" class="flex-1" @keydown="keydown" />
           <UButton :icon="isFetching ? 'i-heroicons-stop' : 'i-heroicons-paper-airplane'" variant="ghost" color="gray" class="flex-shrink-0 mx-3" @click="clickSuffix" />
         </div>
       </div>
