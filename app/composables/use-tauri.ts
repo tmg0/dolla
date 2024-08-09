@@ -7,16 +7,22 @@ type TauriDragDropEvent = Event<{
 }>
 
 interface Options {
-  onDrop?: (event: TauriDragDropEvent) => void
+  onDrop?: (value: { event: TauriDragDropEvent }) => void
   onLeave?: () => void
   resolveId?: (id: string) => boolean
   accept?: string
+}
+
+export function isImage(path: string) {
+  const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
+  return extensions.includes(extname(path).toLowerCase())
 }
 
 export function useFileDrop(options: Options = {}) {
   const isDragOver = ref(false)
   const unlistens: Promise<UnlistenFn>[] = []
   const files = ref<Uint8Array[] | string[]>([])
+  const filepaths = ref<string[]>([])
 
   unlistens[0] = listen('tauri://drag-drop', async (e: TauriDragDropEvent) => {
     if (options.accept && !options.resolveId)
@@ -25,12 +31,13 @@ export function useFileDrop(options: Options = {}) {
       e.payload.paths = e.payload.paths.filter(options.resolveId)
 
     e.payload.paths = [...new Set([...e.payload.paths])]
+    filepaths.value = e.payload.paths
 
-    Promise.all(e.payload.paths.map(path => read(path))).then((f) => {
+    Promise.all(filepaths.value.map(path => read(path))).then((f) => {
       files.value = f
     })
 
-    options.onDrop?.(e)
+    options.onDrop?.({ event: e })
     isDragOver.value = false
   })
 
@@ -49,10 +56,9 @@ export function useFileDrop(options: Options = {}) {
 
   function resolveAccept(accept: string) {
     return function (id: string) {
-      let exts: string[] = []
       if (accept === 'image/*')
-        exts = ['.png', '.jpeg', '.jpg']
-      return exts.includes(extname(id))
+        return isImage(id)
+      return false
     }
   }
 
@@ -68,6 +74,7 @@ export function useFileDrop(options: Options = {}) {
 
   return {
     files,
+    filepaths,
     isDragOver,
     bytesToBase64,
   }

@@ -11,6 +11,12 @@ const sql = `CREATE TABLE IF NOT EXISTS articles (
     hash TEXT
 );
 
+CREATE TABLE IF NOT EXISTS conversation_articles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    conversation_id INTEGER,
+    article_id INTEGER
+);
+
 CREATE TABLE IF NOT EXISTS chunks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     article_id INTEGER,

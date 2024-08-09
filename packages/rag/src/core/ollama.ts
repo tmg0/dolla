@@ -1,5 +1,5 @@
 import { Ollama } from 'ollama/browser'
-import type { Options } from '.'
+import type { Options } from './options'
 
 export async function embed(input: string, options: Partial<Options> = {}) {
   const ollama = new Ollama({ host: 'http://localhost:11434', ...options.ollama })

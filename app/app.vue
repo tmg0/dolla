@@ -1,27 +1,13 @@
 <script setup lang="ts">
 const content = ref('')
-const filepaths = ref<string[]>([])
 const offsetTop = ref(0)
-const { shift, enter } = useMagicKeys()
 const router = useRouter()
 const messageStore = useMessageStore()
 const conversationStore = useConversationStore()
 const { isNew, isFetching } = storeToRefs(messageStore)
+const { isDragOver, files: images } = useFileDrop({ accept: 'image/*' })
 
-const { isDragOver, files: images } = useFileDrop({
-  accept: 'image/*',
-  onDrop({ payload }) {
-    filepaths.value = payload.paths
-  },
-  onLeave() {
-    filepaths.value = []
-  },
-})
-
-watchEffect(() => {
-  if (shift?.value && enter?.value)
-    content.value += '\n'
-})
+useShiftEnter(() => content.value += '\n')
 
 function keydown(e: KeyboardEvent) {
   if (e.keyCode === 13) {
