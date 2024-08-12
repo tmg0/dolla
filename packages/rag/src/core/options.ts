@@ -1,11 +1,15 @@
-import type { Args } from './setup'
+import process from 'node:process'
+import mri from 'mri'
 import { setupSqlite } from './sqlite'
 
 export type Options = ReturnType<typeof resolveOptions>
 
-export function resolveOptions(args: Args) {
+export function resolveOptions() {
+  const args = mri(process.argv.slice(2))
+
   return {
-    input: args._[0] ?? '',
+    articles: args._ ?? [],
+    q: args.q,
     db: setupSqlite(args.db),
     ollama: {
       host: args['ollama.host'] ?? 'http://localhost:11434',

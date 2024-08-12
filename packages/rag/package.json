@@ -7,8 +7,12 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@langchain/community": "^0.2.25",
+    "@langchain/textsplitters": "^0.0.3",
     "better-sqlite3": "^11.1.2",
+    "langchain": "^0.2.15",
     "mri": "^1.2.0",
+    "pdf-parse": "^1.1.1",
     "sqlite-vec": "^0.1.1"
   },
   "devDependencies": {
