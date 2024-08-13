@@ -8,11 +8,11 @@
     "build": "bun run scripts/build.ts",
     "build:tools": "cd packages/tools && bun run build",
     "dev": "bun run build:tools && nuxt dev",
-    "clean": "tsx scripts/clean",
+    "clean": "bun run scripts/clean.ts",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . --ignore-pattern src-tauri/",
-    "lint:fix": "tsx scripts/fmt"
+    "lint:fix": "bun run scripts/fmt.ts"
   },
   "dependencies": {
     "@dolla/tools": "workspace:*",
@@ -42,7 +42,6 @@
     "@types/markdown-it": "^14.1.2",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
-    "execa": "^9.3.0",
     "nuxt": "^3.12.4",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.4"

@@ -1,8 +1,6 @@
-import { execa } from 'execa'
-
 async function run() {
-  await execa('eslint', ['.', '--fix', '--ignore-pattern', 'src-tauri/'], { stdio: 'inherit' })
-  await execa('cargo', ['fmt'], { cwd: 'src-tauri', stdio: 'inherit' })
+  Bun.spawn(['eslint', '.', '--fix', '--ignore-pattern', 'src-tauri/'], { stdout: 'inherit' })
+  Bun.spawn(['cargo', 'fmt'], { stdout: 'inherit' })
 }
 
 run()

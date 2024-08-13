@@ -1,7 +1,6 @@
-import { execa } from 'execa'
-
 async function run() {
-  await execa('nuxt', ['dev'], { stdio: 'inherit' })
+  Bun.spawn(['bun', 'run', 'build'], { cwd: 'packages/tools', stdout: 'inherit' })
+  Bun.spawn(['nuxt', 'dev'], { stdout: 'inherit' })
 }
 
 run()
