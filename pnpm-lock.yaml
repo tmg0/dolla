@@ -99,6 +99,12 @@ importers:
 
   packages/rag:
     dependencies:
+      '@hono/node-server':
+        specifier: ^1.12.0
+        version: 1.12.0
+      '@hono/valibot-validator':
+        specifier: ^0.3.0
+        version: 0.3.0(hono@4.5.5)(valibot@0.37.0(typescript@5.5.4))
       '@langchain/community':
         specifier: ^0.2.25
         version: 0.2.25(better-sqlite3@11.1.2)(ignore@5.3.1)(ioredis@5.4.1)(lodash@4.17.21)(openai@4.55.4(zod@3.23.8))(pdf-parse@1.1.1)(ws@8.18.0)
@@ -108,18 +114,21 @@ importers:
       better-sqlite3:
         specifier: ^11.1.2
         version: 11.1.2
+      hono:
+        specifier: ^4.5.5
+        version: 4.5.5
       langchain:
         specifier: ^0.2.15
         version: 0.2.15(@langchain/community@0.2.25(better-sqlite3@11.1.2)(ignore@5.3.1)(ioredis@5.4.1)(lodash@4.17.21)(openai@4.55.4(zod@3.23.8))(pdf-parse@1.1.1)(ws@8.18.0))(ignore@5.3.1)(ioredis@5.4.1)(openai@4.55.4(zod@3.23.8))(pdf-parse@1.1.1)(ws@8.18.0)
-      mri:
-        specifier: ^1.2.0
-        version: 1.2.0
       pdf-parse:
         specifier: ^1.1.1
         version: 1.1.1
       sqlite-vec:
         specifier: ^0.1.1
         version: 0.1.1
+      valibot:
+        specifier: ^0.37.0
+        version: 0.37.0(typescript@5.5.4)
     devDependencies:
       '@types/better-sqlite3':
         specifier: ^7.6.11
@@ -874,6 +883,16 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       vue: ^3.2.0
+
+  '@hono/node-server@1.12.0':
+    resolution: {integrity: sha512-e6oHjNiErRxsZRZBmc2KucuvY3btlO/XPncIpP2X75bRdTilF9GLjm3NHvKKunpJbbJJj31/FoPTksTf8djAVw==}
+    engines: {node: '>=18.14.1'}
+
+  '@hono/valibot-validator@0.3.0':
+    resolution: {integrity: sha512-EcGJKzLt11SK4K11yKHrhI93ECtKeSHAnnENHw5tCL0ZhyDIx96avc3Ua8/ri4fwVvRPuOzFQ2OBRsVvwZuqeQ==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      valibot: '>=0.31.0 <1'
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -3531,6 +3550,10 @@ packages:
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
 
+  hono@4.5.5:
+    resolution: {integrity: sha512-fXBXHqaVfimWofbelLXci8pZyIwBMkDIwCa4OwZvK+xVbEyYLELVP4DfbGaj1aEM6ZY3hHgs4qLvCO2ChkhgQw==}
+    engines: {node: '>=16.0.0'}
+
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
 
@@ -5759,6 +5782,14 @@ packages:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
 
+  valibot@0.37.0:
+    resolution: {integrity: sha512-FQz52I8RXgFgOHym3XHYSREbNtkgSjF9prvMFH1nBsRyfL6SfCzoT1GuSDTlbsuPubM7/6Kbw0ZMQb8A+V+VsQ==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -6663,6 +6694,13 @@ snapshots:
     dependencies:
       '@tanstack/vue-virtual': 3.8.4(vue@3.4.34(typescript@5.5.4))
       vue: 3.4.34(typescript@5.5.4)
+
+  '@hono/node-server@1.12.0': {}
+
+  '@hono/valibot-validator@0.3.0(hono@4.5.5)(valibot@0.37.0(typescript@5.5.4))':
+    dependencies:
+      hono: 4.5.5
+      valibot: 0.37.0(typescript@5.5.4)
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
@@ -9586,6 +9624,8 @@ snapshots:
 
   hey-listen@1.0.8: {}
 
+  hono@4.5.5: {}
+
   hookable@5.5.3: {}
 
   hosted-git-info@2.8.9: {}
@@ -11845,6 +11885,10 @@ snapshots:
   uuid@10.0.0: {}
 
   uuid@9.0.1: {}
+
+  valibot@0.37.0(typescript@5.5.4):
+    optionalDependencies:
+      typescript: 5.5.4
 
   validate-npm-package-license@3.0.4:
     dependencies:

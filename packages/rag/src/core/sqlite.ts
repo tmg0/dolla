@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS chunks (
     content TEXT
 );
 
-CREATE VIRTUAL TABLE IF NOT EXISTS bge_m3 USING vec0(
-  embedding float[1024],
+CREATE VIRTUAL TABLE IF NOT EXISTS llama3_1 USING vec0(
+  embedding float[4096],
 );`
 
 export function setupSqlite(filename: string) {

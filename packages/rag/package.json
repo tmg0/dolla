@@ -7,13 +7,16 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@hono/node-server": "^1.12.0",
+    "@hono/valibot-validator": "^0.3.0",
     "@langchain/community": "^0.2.25",
     "@langchain/textsplitters": "^0.0.3",
     "better-sqlite3": "^11.1.2",
+    "hono": "^4.5.5",
     "langchain": "^0.2.15",
-    "mri": "^1.2.0",
     "pdf-parse": "^1.1.1",
-    "sqlite-vec": "^0.1.1"
+    "sqlite-vec": "^0.1.1",
+    "valibot": "^0.37.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
