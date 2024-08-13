@@ -1,5 +1,7 @@
-import Database from 'better-sqlite3'
+import Database from 'bun:sqlite'
 import * as sqliteVec from 'sqlite-vec'
+
+Database.setCustomSQLite('/Users/zekun.jin/Documents/Repositories/Tamago/dolla/packages/rag/src/core/sqlite3.wasm')
 
 interface VecVersion {
   vec_version: string
@@ -28,7 +30,6 @@ CREATE VIRTUAL TABLE IF NOT EXISTS llama3_1 USING vec0(
 );`
 
 export function setupSqlite(filename: string) {
-  console.log(filename)
   const db = new Database(filename)
   sqliteVec.load(db)
   db.exec(sql)
