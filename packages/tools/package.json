@@ -1,10 +1,7 @@
 {
   "name": "@dolla/tools",
-  "main": "./dist/index.mjs",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "tsup"
-  },
-  "devDependencies": {
-    "tsup": "^8.2.4"
+    "build": "bun build ./src/index.ts --outdir ./dist"
   }
 }

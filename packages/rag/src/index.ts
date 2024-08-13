@@ -1,4 +1,3 @@
-import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { type InferInput, array, object, string } from 'valibot'
@@ -30,7 +29,7 @@ app.post('/', vValidator('json', schema), async (c) => {
   return c.json(response)
 })
 
-serve({
-  fetch: app.fetch,
+export default {
   port: 11435,
-})
+  fetch: app.fetch,
+}

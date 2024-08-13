@@ -28,7 +28,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS llama3_1 USING vec0(
 );`
 
 export function setupSqlite(filename: string) {
-  const db = new Database(filename, { fileMustExist: true })
+  console.log(filename)
+  const db = new Database(filename)
   sqliteVec.load(db)
   db.exec(sql)
   return db

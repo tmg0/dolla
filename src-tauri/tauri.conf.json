@@ -3,10 +3,10 @@
   "version": "0.0.1-alpha.5",
   "identifier": "io.dolla.desktop",
   "build": {
-    "frontendDist": "../.output/public",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:3000",
-    "beforeDevCommand": "pnpm dev",
-    "beforeBuildCommand": "pnpm build"
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "bun run build"
   },
   "app": {
     "windows": [

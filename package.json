@@ -3,9 +3,11 @@
   "type": "module",
   "version": "0.0.1-alpha.5",
   "private": true,
+  "workspaces": ["packages/*"],
   "scripts": {
-    "build": "tsx scripts/build",
-    "dev": "tsx scripts/dev",
+    "build": "bun run scripts/build.ts",
+    "build:tools": "cd packages/tools && bun run build",
+    "dev": "bun run build:tools && nuxt dev",
     "clean": "tsx scripts/clean",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -36,13 +38,13 @@
     "@nuxt/ui": "^2.18.3",
     "@shikijs/markdown-it": "^1.12.0",
     "@tauri-apps/cli": "2.0.0-beta.22",
+    "@types/bun": "^1.1.6",
     "@types/markdown-it": "^14.1.2",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
     "execa": "^9.3.0",
     "nuxt": "^3.12.4",
     "rimraf": "^6.0.1",
-    "tsx": "^4.16.5",
     "typescript": "^5.5.4"
   }
 }
