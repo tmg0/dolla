@@ -1,7 +1,7 @@
 import Database from 'bun:sqlite'
 import * as sqliteVec from 'sqlite-vec'
 
-Database.setCustomSQLite('/Users/zekun.jin/Documents/Repositories/Tamago/dolla/packages/rag/src/core/sqlite3.wasm')
+Database.setCustomSQLite('./bin/libsqlite3.dylib')
 
 interface VecVersion {
   vec_version: string

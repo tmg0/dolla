@@ -25,3 +25,6 @@ logs
 
 # External binaries
 binaries
+
+# Sqlite dylib
+libsqlite3.dylib
