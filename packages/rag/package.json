@@ -13,7 +13,6 @@
     "hono": "^4.5.5",
     "langchain": "^0.2.15",
     "pdf-parse": "^1.1.1",
-    "sqlite-vec": "^0.1.2-alpha.6",
     "valibot": "^0.37.0"
   }
 }

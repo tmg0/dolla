@@ -1,5 +1,4 @@
 import Database from 'bun:sqlite'
-import * as sqliteVec from 'sqlite-vec'
 
 Database.setCustomSQLite('./deps/libsqlite3.dylib')
 
@@ -31,7 +30,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS llama3_1 USING vec0(
 
 export function setupSqlite(filename: string) {
   const db = new Database(filename)
-  sqliteVec.load(db)
+  db.loadExtension('./deps/vec0')
   db.exec(sql)
   return db
 }
