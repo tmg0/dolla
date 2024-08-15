@@ -1,7 +1,7 @@
 import Database from 'bun:sqlite'
 import * as sqliteVec from 'sqlite-vec'
 
-Database.setCustomSQLite('./bin/libsqlite3.dylib')
+Database.setCustomSQLite('./deps/libsqlite3.dylib')
 
 interface VecVersion {
   vec_version: string
